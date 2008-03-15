@@ -38,16 +38,16 @@ public class GameWorld {
 	public void spawnNewFood(){
 		
 		Random rand = new Random();
-		int random = rand.nextInt(10000);
+		int random;
 		
 		for(int i = 1;i < (width - 1);i++){
 			for (int j = 1;j <(height - 1);j++){
 				
+				random = rand.nextInt(10000);
+				
 				if (world[i][j].getType() == ObjectType.NONE){
 					if (random < regenRate){
-						
 						this.addFood(i, j);
-						
 					}
 				}
 			}
