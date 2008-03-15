@@ -1,5 +1,6 @@
-package rules;
+package GameWorld;
 
+import rules.Direction;
 import actors.GameObject;
 
 public class Perception {
