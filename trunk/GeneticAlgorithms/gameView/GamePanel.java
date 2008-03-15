@@ -27,10 +27,10 @@ public class GamePanel extends JPanel {
 
 	private int height;
 
-	public GamePanel(int width, int height, GameWorld world) {
+	public GamePanel(int width, int height, GameWorld world, int ms) {
 
 		this.world = world;
-		t = new Timer(100, new TickListener());
+		t = new Timer(ms, new TickListener());
 		this.setUp(width, height);
 		this.width = width;
 		this.height = height;

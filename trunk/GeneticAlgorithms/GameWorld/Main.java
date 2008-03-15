@@ -7,7 +7,12 @@ public class Main {
 	
 	public static void main(String args[]){
 		
-		GameFrame frame = new GameFrame(80,60);
+		int width = 80;
+		int height = 60;
+		int ms = 1;
+		
+		
+		GameFrame frame = new GameFrame(width,height,ms);
 		
 	}
 	

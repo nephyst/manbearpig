@@ -72,15 +72,16 @@ public class Actor extends GameObject {
 //	}
 
 	public boolean canEat(GameObject other) {
-		boolean ret = true;
-		if (!other.isAlive()) {
-			//ret = false;
-		} else if (this.getType() == ObjectType.PREY &&
-				   other.getType() != ObjectType.FOOD) {
-			ret = false;
+		
+		boolean ret = false;
+		if (this.getType() == ObjectType.PREY &&
+				   other.getType() == ObjectType.FOOD &&
+				   other.isAlive()) {
+			ret = true;
 		} else if (this.getType() == ObjectType.HUNTER &&
-					other.getType() != ObjectType.PREY) {
-			ret = false;
+					other.getType() != ObjectType.PREY &&
+					other.isAlive()) {
+			ret = true;
 		}
 
 		return ret;
