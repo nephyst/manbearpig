@@ -25,20 +25,19 @@ public class Rules {
 	}
 	
 	public void generateRandomRules() {
-		Random r = new Random();
-		for (int i = 0; i < r.nextInt(10); i++) {
+		for (int i = 0; i < 4; i++) {
 			up.add(new SimpleRule());
 		}
-		for (int i = 0; i < r.nextInt(10); i++) {
+		for (int i = 0; i < 4; i++) {
 			down.add(new SimpleRule());
 		}
-		for (int i = 0; i < r.nextInt(10); i++) {
+		for (int i = 0; i < 4; i++) {
 			left.add(new SimpleRule());
 		}
-		for (int i = 0; i < r.nextInt(10); i++) {
+		for (int i = 0; i < 4; i++) {
 			right.add(new SimpleRule());
 		}
-		for (int i = 0; i < r.nextInt(10); i++) {
+		for (int i = 0; i < 6; i++) {
 			random.add(new SimpleRule());
 		}
 	}
