@@ -1,6 +1,5 @@
 package actors;
 
-import java.util.ArrayList;
 import rules.Action;
 import rules.Rules;
 import GameWorld.Perception;
