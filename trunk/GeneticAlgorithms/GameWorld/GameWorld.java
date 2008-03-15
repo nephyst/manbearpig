@@ -134,7 +134,6 @@ public class GameWorld {
 
 			}
 		}
-
 	}
 
 	public void addRock(int x, int y) {
