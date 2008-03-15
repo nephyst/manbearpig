@@ -126,8 +126,6 @@ public class GameWorld {
 					
 					random = rand.nextInt(10000);
 					
-					System.out.println(random);
-					
 					if (random < wumpus){
 						this.addWumpus(i, j);
 					}else if (random >= wumpus && random < (wumpus + prey)){
@@ -149,10 +147,17 @@ public class GameWorld {
 		return this.actors;
 		
 	}
-	
-	
-	public void simulateActor(Actor actor,Action action){
+	public void doAction(Actor actor, int dx, int dy) {
+		GameObject other = world[actor.getX() + dx][actor.getY() + dy];
+		if (other.getType() == ObjectType.WALL) {
+			return;
+		}
 		
+		
+		
+	}
+	public void simulateActor(Actor actor,Action action){
+
 		switch (action){
 		
 		case UP:
