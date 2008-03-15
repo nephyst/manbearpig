@@ -237,16 +237,19 @@ public class GameWorld {
 			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),
 					actor.getY(), ObjectType.NONE, false);
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
-			actor.setX(translateX(actor.getX() + dx));
-			actor.setY(translateY(actor.getY() + dy));
+			
 			if (actor.getEnergy() > 250) {
 				System.out.println("I HAS BABBEIS");
 				Actor child = actor.spawn();
-				world[translateX(actor.getX() - dx)][translateY(actor.getY() - dy)] = child;
+				world[translateX(actor.getX())][translateY(actor.getY())] = child;
 				child.setEnergy(250);
 				actor.setEnergy(actor.getEnergy() - 250);
 				this.actors.add(child);
 			}
+			
+			actor.setX(translateX(actor.getX() + dx));
+			actor.setY(translateY(actor.getY() + dy));
+
 		} else if (actor.canEat(other)) {
 			actor.addEnergy(this.energyGained);
 			other.setAlive(false);
