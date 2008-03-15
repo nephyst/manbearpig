@@ -15,118 +15,114 @@ import GameWorld.GameWorld;
 import actors.GameObject;
 import actors.ObjectType;
 
-public class GamePanel extends JPanel{
+public class GamePanel extends JPanel {
 
 	private GameWorld world;
-	
+
 	private boolean grid = true;
+
 	private Timer t;
+
 	private int width;
+
 	private int height;
-	
-	public GamePanel(int width, int height, GameWorld world){
-		
+
+	public GamePanel(int width, int height, GameWorld world) {
+
 		this.world = world;
 		t = new Timer(100, new TickListener());
 		this.setUp(width, height);
 		this.width = width;
 		this.height = height;
 		t.start();
-		
-		
+
 	}
-	
-	public void setUp(int width, int height){
-		
-		this.setSize(new Dimension(width,height));
-		
+
+	public void setUp(int width, int height) {
+
+		this.setSize(new Dimension(width, height));
+
 	}
-	
-	public void paintComponent(Graphics g){
-		
-		Graphics2D g2d = (Graphics2D)g;
-		
+
+	public void paintComponent(Graphics g) {
+
+		Graphics2D g2d = (Graphics2D) g;
+
 		g2d.setColor(Color.white);
-		g2d.fillRect(0, 0,this.getWidth(), this.getHeight());
-		
+		g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+
 		int blockWidth = this.getWidth() / world.getWidth();
 		int blockHeight = this.getHeight() / world.getHeight();
-		
+
 		GameObject[][] objects = world.getWorld();
-		
-		for (int i = 0;i < world.getWidth();i++){
-			for (int j = 0;j < world.getHeight();j++){
-				
+
+		for (int i = 0; i < world.getWidth(); i++) {
+			for (int j = 0; j < world.getHeight(); j++) {
+
 				GameObject current = objects[i][j];
 				ObjectType type = current.getType();
-				
-				if (type != ObjectType.NONE){
-					
+
+				if (type != ObjectType.NONE) {
+
 					Color c = Color.white;
-		
-					switch(type){
-		
-					case NONE: 
+
+					switch (type) {
+
+					case NONE:
 						c = Color.white;
 						break;
-		
+
 					case FOOD:
 						c = Color.green;
 						break;
-		
+
 					case PREY:
 						c = Color.blue;
 						break;
-		
-					case HUNTER: 
+
+					case HUNTER:
 						c = Color.red;
 						break;
-		
+
 					case WALL:
 						c = Color.gray;
 						break;
-						
-					case WUMPUS:
-						c = Color.orange;
-						break;
 					}
-		
+
 					g2d.setColor(c);
-					g2d.fillRect(current.getX()*blockWidth, current.getY()*blockHeight,blockWidth, blockHeight);
+					g2d.fillRect(current.getX() * blockWidth, current.getY()
+							* blockHeight, blockWidth, blockHeight);
 				}
-			}	
+			}
 		}
-		
-		
-		if (grid){
+
+		if (grid) {
 			g2d.setColor(Color.black);
 			int i = 0;
-			
-			while (i < this.getWidth()){
+
+			while (i < this.getWidth()) {
 				g2d.drawLine(i, 0, i, this.getHeight());
 				i = i + blockWidth;
 			}
 			i = 0;
-			
-			while (i < this.getHeight()){
-				g2d.drawLine(0, i, this.getWidth(),i );
+
+			while (i < this.getHeight()) {
+				g2d.drawLine(0, i, this.getWidth(), i);
 				i = i + blockHeight;
 			}
 		}
-		
-		
+
 	}
-	
-	private class TickListener implements ActionListener{
-		
-		public void actionPerformed(ActionEvent e){
-			
+
+	private class TickListener implements ActionListener {
+
+		public void actionPerformed(ActionEvent e) {
+
 			world.tick();
 			repaint();
-			
+
 		}
-		
+
 	}
-	
-	
+
 }
