@@ -3,7 +3,7 @@ import java.util.Random;
 
 public enum Action {
 
-	LEFT, RIGHT, UP, DOWN, NONE;
+	LEFT, RIGHT, UP, DOWN, NONE, RANDOM;
 	
 	public static Action getRandomMovement() {
 		

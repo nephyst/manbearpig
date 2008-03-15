@@ -137,7 +137,7 @@ public class GameWorld {
 	}
 	public void doAction(Actor actor, int dx, int dy) {
 		GameObject other = world[actor.getX() + dx][actor.getY() + dy];
-		if (other.getType() != ObjectType.NONE) {
+		if (other.getType() == ObjectType.NONE) {
 			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
 			world[actor.getX() + dx][actor.getY() + dy] = actor;
 			actor.setX(actor.getX() + dx);

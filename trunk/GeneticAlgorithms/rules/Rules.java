@@ -1,39 +1,34 @@
 package rules;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 import GameWorld.Perception;
 import actors.ObjectType;
 
 
-public class Rule {
+public class Rules {
 	
-	private Direction direction;
-	private boolean has; //true has; false doesnt have;
-	private ObjectType objectType;
-	private Action action;
+	private ArrayList<SimpleRule> up;
+	private ArrayList<SimpleRule> down;
+	private ArrayList<SimpleRule> left;
+	private ArrayList<SimpleRule> right;
+	private ArrayList<SimpleRule> none;
 	
-	
-	public Rule () {
-		generateRandomRule();
+	public Rules () {
+		up = new ArrayList<SimpleRule>();
+		down = new ArrayList<SimpleRule>();
+		left = new ArrayList<SimpleRule>();
+		right = new ArrayList<SimpleRule>();
+		none = new ArrayList<SimpleRule>();
+		generateRandomRules();
 	}
-	public Rule (Direction direction, boolean has, ObjectType objectType, Action action) {
-		this.direction = direction;
-		this.has = has;
-		this.objectType = objectType;
-		this.action = action;
-	}
 	
-	public void generateRandomRule() {
+	public void generateRandomRules() {
 		Random r = new Random();
 		Direction directions[] = Direction.values();
 		ObjectType objectTypes[] = ObjectType.values();
 		Action actions[] = Action.values();
-		
-		this.direction = directions[r.nextInt(directions.length)];
-		this.objectType = objectTypes[r.nextInt(objectTypes.length)];
-		this.action = actions[r.nextInt(actions.length)];
-		this.has = (r.nextInt(2) == 0);
 	}
 	
 	public boolean checkRule(Perception p) {
@@ -44,7 +39,7 @@ public class Rule {
 		return this.action;
 	}
 	
-	public Rule mutate() {
+	public Rules mutate() {
 		Random r = new Random();
 		int i = r.nextInt(4);
 		
@@ -71,6 +66,6 @@ public class Rule {
 			newHas = (r.nextInt(2) == 0);
 			break;
 		}
-		return new Rule(newDir, newHas, newType, newAct);
+		return new Rules(newDir, newHas, newType, newAct);
 	}
 }
