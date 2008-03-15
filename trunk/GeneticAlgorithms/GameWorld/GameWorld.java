@@ -25,7 +25,7 @@ public class GameWorld {
 		this.world = new GameObject[width][height];
 		this.actors = new ArrayList<Actor>();
 		this.initWorld();
-		this.loadRandomWorld(1, 100, 100, 50);
+		this.loadRandomWorld(100, 100, 50);
 		
 	}
 	
@@ -76,10 +76,8 @@ public class GameWorld {
 					world[i][j] = none;
 					
 				}
-				
 			}
 		}
-		
 		
 	}
 	
@@ -96,7 +94,6 @@ public class GameWorld {
 		this.addPrey(6, 9);
 		this.addPrey(15, 4);
 		this.addHunter(20, 20);
-		this.addWumpus(2, 2);
 		
 	}
 	
@@ -115,25 +112,23 @@ public class GameWorld {
 		
 	}
 	
-	public void loadRandomWorld(int wumpus,int prey,int food,int hunter){
+	public void loadRandomWorld(int prey,int food,int hunter){
 		
 		Random rand = new Random();
 		int random = 0;
 		
-		if ((random + wumpus + prey + food) <= 10000){
+		if ((random + prey + food) <= 10000){
 		
 			for(int i = 1;i < (width - 1);i++){
 				for (int j = 1;j <(height - 1);j++){
 					
 					random = rand.nextInt(10000);
 					
-					if (random < wumpus){
-						this.addWumpus(i, j);
-					}else if (random >= wumpus && random < (wumpus + prey)){
+					if (random < prey){
 						this.addPrey(i, j);
-					}else if (random >= (wumpus + prey) && random < (wumpus + prey + food)){
+					}else if (random >= prey && random < (prey + food)){
 						this.addFood(i, j);
-					}else if (random >= (wumpus + prey + food) && random < (wumpus + prey + food + hunter)){
+					}else if (random >= (prey + food) && random < (prey + food + hunter)){
 						this.addHunter(i, j);
 					}
 				}
@@ -155,11 +150,11 @@ public class GameWorld {
 			world[actor.getX() + dx][actor.getY() + dy] = actor;
 			actor.setX(actor.getX() + dx);
 			actor.setY(actor.getY() + dy);
-		} else if (other.getType() == actor.getType()) {
+		} //else if (other.getType() == actor.getType()) {
 			//mate
-		} else if () {
+		//} else if () {
 			
-		} //else wall : nothing
+		//} //else wall : nothing
 	}
 	public void simulateActor(Actor actor,Action action){
 		
