@@ -83,19 +83,12 @@ public class GameWorld {
 		for (int i = 0;i < this.width;i++){
 			for (int j = 0;j <height;j++){
 				
-				if (i == 0 || j == 0 || i == (width -1) || j == (height-1)){
-					
-					GameObject wall = new GameObject(i,j,ObjectType.WALL,false);
-					world[i][j] = wall;
-					
-				}else{
+				
 					GameObject none = new GameObject(i,j,ObjectType.NONE,false);
 					world[i][j] = none;
 					
-				}
 			}
 		}
-		
 	}
 	
 	public void loadWorld1(){
@@ -162,20 +155,51 @@ public class GameWorld {
 	}
 	public void doAction(Actor actor, int dx, int dy) {
 		
-		GameObject other = world[actor.getX() + dx][actor.getY() + dy];
+		GameObject other = world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)];
 		
 		if (other.getType() == ObjectType.NONE) {
 			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
-			world[actor.getX() + dx][actor.getY() + dy] = actor;
-			actor.setX(actor.getX() + dx);
-			actor.setY(actor.getY() + dy);
+			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
+			actor.setX(translateX(actor.getX() + dx));
+			actor.setY(translateY(actor.getY() + dy));
 		} else if (other.getType() == actor.getType()) {
 			//mate
 		} else if (actor.canEat(other)) {
 			//Actor Eats other
 		}
 	}
+	
+	public int translateX(int x){
+		
+		if (x < 0){
+			return (this.width - 1);
+		}else if (x >= this.width){
+			return 0;
+		}
+		
+		return x;
+		
+	}
+	
+	public int translateY(int y){
+		
+		if (y < 0){
+			return (this.height - 1);
+		}else if (y >= this.height){
+			return 0;
+		}
+		
+		return y;
+		
+	}
+	
 	public void simulateActor(Actor actor,Action action){
+		
+		if (action == Action.RANDOM){
+			
+			action = Action.getRandomMovement();
+			
+		}
 		
 		switch (action){
 		
@@ -195,7 +219,6 @@ public class GameWorld {
 			break;
 		}
 		
-		//RANDOM RULES NEEDS TO BE CODED
 	}
 	
 	public void randomizeList(ArrayList<Actor> actorList){
