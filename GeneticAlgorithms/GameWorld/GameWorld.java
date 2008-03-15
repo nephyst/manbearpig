@@ -2,7 +2,7 @@ package GameWorld;
 
 import java.util.ArrayList;
 import actors.*;
-
+import java.util.HashMap;
 import java.util.Random;
 import rules.*;
 
@@ -11,41 +11,70 @@ public class GameWorld {
 	private Random rand;
 
 	private int width;
-
 	private int height;
 
 	private int turnCount = 0;
-
 	private int generation = 0;
+	
+	private int regenRate;// = 30; // Chance that a piece of food will be spawned
+	private int regenTurn;// = 10; // How many turns until food is spawned
+	private int regenCounter;// = regenTurn; // Counter for food respawn
 
-	private int regenRate = 10; // Chance that a piece of food will be spawned
-
-	private int regenTurn = 2; // How many turns until food is spawned
-
-	private int regenCounter = regenTurn; // Counter for food respawn
-
-	private int preyEnergy = 250;
-
-	private int hunterEnergy = 1;
-
-	private int foodEnergy = 1;
-
-	private int energyGained = 30;
+	private int preyEnergy;// = 250;
+	private int hunterEnergy;// = 1;
+	private int foodEnergy;// = 300;
+	private int energyGained;// = 30;
+	
+	// (N / 10000) chance of spawning
+	private int preyCount;// = 500;
+	private int foodCount;// = 100;
+	private int hunterCount;// = 30;
+	private int rockCount;// = 10;
 
 	private GameObject[][] world;
 
 	private ArrayList<Actor> actors;
 
-	public GameWorld(int width, int height) {
-
+//	public GameWorld(int width, int height) {
+//
+//		this.rand = new Random();
+//		this.width = width;
+//		this.height = height;
+//		this.world = new GameObject[width][height];
+//		this.actors = new ArrayList<Actor>();
+//		this.initWorld();
+//		this.loadRandomWorld(preyCount, foodCount, hunterCount, rockCount);
+//
+//	}
+	
+	public GameWorld(HashMap<String,Integer> map){
+		
 		this.rand = new Random();
-		this.width = width;
-		this.height = height;
+		width = map.get("width");
+		height = map.get("height");
 		this.world = new GameObject[width][height];
 		this.actors = new ArrayList<Actor>();
-		this.initWorld();
-		this.loadRandomWorld(100, 100, 50, 10);
 
+		this.regenRate = map.get("regenRate");
+		this.regenTurn = map.get("regenTurn");
+		
+		this.preyEnergy = map.get("preyEnergy");
+		this.hunterEnergy = map.get("hunterEnergy");
+		this.foodEnergy = map.get("foodEnergy");
+		
+		this.energyGained = map.get("energyGained");
+		
+		this.preyCount = map.get("preyCount");
+		this.foodCount = map.get("foodCount");
+		this.hunterCount = map.get("hunterCount");
+		this.rockCount = map.get("rockCount");
+		
+		regenCounter = regenTurn;
+		
+		this.initWorld();
+		this.loadRandomWorld(map.get("preyCount"), map.get("foodCount"), map.get("hunterCount"), map.get("rockCount"));
+		
+		
 	}
 
 	public void spawnNewFood() {
@@ -200,7 +229,7 @@ public class GameWorld {
 				.getY()
 				+ dy)];
 
-		if (actor.getType() == ObjectType.PREY) {
+		if (actor.getType() == ObjectType.PREY || actor.getType() == ObjectType.FOOD) {
 			actor.subtractEnergy(1);
 		}
 
