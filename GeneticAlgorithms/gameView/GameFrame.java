@@ -14,14 +14,17 @@ public class GameFrame extends JFrame{
 	
 	private final int windowWidth = 1024;
 	private final int windowHeight = 768;
+	private final int ms;
 	
 	private Toolkit kit = Toolkit.getDefaultToolkit();
 	
 	private GamePanel gamePanel;
 	
-	public GameFrame(int gameWidth,int gameHeight){
+	public GameFrame(int gameWidth,int gameHeight, int ms){
 		
 		Dimension d = this.getCorrectDimension(gameWidth, gameHeight);
+		
+		this.ms = ms;
 		
 		this.setUpWorld(gameWidth, gameHeight);
 		this.addComponents(d);
@@ -62,7 +65,7 @@ public class GameFrame extends JFrame{
 	public void addComponents(Dimension d){
 		
 
-		this.gamePanel = new GamePanel(d.width,d.height,world);
+		this.gamePanel = new GamePanel(d.width,d.height,world,ms);
 		this.add(gamePanel);
 	
 	}

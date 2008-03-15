@@ -16,14 +16,16 @@ public class GameWorld {
 	
 	private int turnCount = 0;
 	private int generation = 0;
+	
 	private int regenRate = 10; //Chance that a piece of food will be spawned
-	private int regenTurn = 20; //How many turns until food is spawned
+	private int regenTurn = 5; //How many turns until food is spawned
 	private int regenCounter = regenTurn; //Counter for food respawn
 	
-	private int preyEnergy = 100;
-	private int hunterEnergy = 100;
-	private int foodEnergy = 100;
-	private int energyGained = 10;
+	
+	private int preyEnergy = 250;
+	private int hunterEnergy = 1;
+	private int foodEnergy = 1;
+	private int energyGained = 35;
 	
 	private GameObject[][] world;
 	private ArrayList<Actor> actors;
@@ -190,7 +192,9 @@ public class GameWorld {
 		
 		GameObject other = world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)];
 		
-		actor.subtractEnergy(1);
+		if (actor.getType() == ObjectType.PREY){
+			actor.subtractEnergy(1);
+		}
 		
 		if (other.getType() == ObjectType.NONE && !(dx == 0 && dy == 0)) {
 			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
@@ -199,7 +203,7 @@ public class GameWorld {
 			actor.setY(translateY(actor.getY() + dy));
 		}else if (actor.canEat(other)) {
 			actor.addEnergy(this.energyGained);
-			//other.setAlive(false);
+			other.setAlive(false);
 		}else if (other.getType() == actor.getType()) {
 			//mate
 		} 
