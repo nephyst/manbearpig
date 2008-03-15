@@ -38,6 +38,9 @@ HashMap<String,Integer> map = new HashMap<String,Integer>();
 		map.put("hunterCount",50); //number of hunters
 		map.put("rockCount", 10); //number of rocks
 		
+		//When an actor's energy exceeds this level,  
+		map.put("respawnLevel",250);
+		
 		GameFrame frame = new GameFrame(map);
 		
 	}

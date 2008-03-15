@@ -25,6 +25,8 @@ public class GameWorld {
 	private int foodEnergy;// = 300;
 	private int energyGained;// = 30;
 	
+	private int respawnLevel;
+
 	private GameObject[][] world;
 
 	private ArrayList<Actor> actors;
@@ -57,6 +59,8 @@ public class GameWorld {
 		this.foodEnergy = map.get("foodEnergy");
 		
 		this.energyGained = map.get("energyGained");
+		
+		this.respawnLevel = map.get("respawnLevel");
 		
 		regenCounter = regenTurn;
 		
@@ -225,7 +229,7 @@ public class GameWorld {
 					actor.getY(), ObjectType.NONE, false);
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
 			
-			if (actor.getEnergy() > 250) {
+			if (actor.getEnergy() > respawnLevel) {
 				Actor child = actor.spawn();
 				world[translateX(actor.getX())][translateY(actor.getY())] = child;
 				child.setEnergy(250);
