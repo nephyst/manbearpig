@@ -149,15 +149,19 @@ public class GameWorld {
 	}
 	public void doAction(Actor actor, int dx, int dy) {
 		GameObject other = world[actor.getX() + dx][actor.getY() + dy];
-		if (other.getType() == ObjectType.WALL) {
-			return;
-		}
-		
-		
-		
+		if (other.getType() != ObjectType.NONE) {
+			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
+			world[actor.getX() + dx][actor.getY() + dy] = actor;
+			actor.setX(actor.getX() + dx);
+			actor.setY(actor.getY() + dy);
+		} else if (other.getType() == actor.getType()) {
+			//mate
+		} else if () {
+			
+		} //else wall : nothing
 	}
 	public void simulateActor(Actor actor,Action action){
-
+		
 		switch (action){
 		
 		case UP:
@@ -185,47 +189,6 @@ public class GameWorld {
 		}
 	}
 	
-	public boolean validEat(Actor actor, Action a){
-		
-		GameObject prey = new GameObject(0,0,ObjectType.NONE,false);
-		
-		ObjectType actorType = actor.getType();
-		
-		if (prey.getType() == ObjectType.WALL){
-			return false;
-		}else if(!prey.isAlive()){
-			return false;
-		}else if (prey.getType() == ObjectType.NONE){
-			return false;
-		}else if (actorType == ObjectType.PREY){
-			
-			if (prey.getType() != ObjectType.FOOD){
-				return false;
-			}else {
-				return true;
-			}
-			
-		}else if (actorType == ObjectType.HUNTER){
-			
-			if (prey.getType() != ObjectType.PREY){
-				return false;
-			}else {
-				return true;
-			}
-			
-		}else if (actorType == ObjectType.WUMPUS){
-			
-			if (prey.getType() != ObjectType.WALL || prey.getType() != ObjectType.NONE){
-				return true;
-			}else{
-				return false;
-			}
-			
-		}
-		
-		return false;
-	}
-	
 	public void randomizeList(ArrayList<Actor> actorList){
 		
 		Random rand = new Random();
@@ -242,7 +205,6 @@ public class GameWorld {
 		}
 		
 		this.actors = newList;
-		
 	}
 	
 	public void removeKilled(ArrayList<Actor> actorList){
