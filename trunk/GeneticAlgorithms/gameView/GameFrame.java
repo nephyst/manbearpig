@@ -4,9 +4,9 @@ package gameView;
 import javax.swing.JFrame;
 
 import GameWorld.GameWorld;
-
 import java.awt.Dimension;
 import java.awt.Toolkit;
+import java.util.HashMap;
 
 public class GameFrame extends JFrame{
 
@@ -20,22 +20,23 @@ public class GameFrame extends JFrame{
 	
 	private GamePanel gamePanel;
 	
-	public GameFrame(int gameWidth,int gameHeight, int ms){
+	public GameFrame(HashMap<String,Integer> map){
 		
-		Dimension d = this.getCorrectDimension(gameWidth, gameHeight);
+		Dimension d = this.getCorrectDimension(map.get("width"), map.get("height"));
 		
-		this.ms = ms;
+		this.ms = map.get("ms");
 		
-		this.setUpWorld(gameWidth, gameHeight);
+		this.setUpWorld(map);
 		this.addComponents(d);
 		this.setUp(d);
 		this.startup();
 		
 	}
 	
-	public void setUpWorld(int width, int height){
+	public void setUpWorld(HashMap<String,Integer> map){
 		
-		world = new GameWorld(width,height);
+		//world = new GameWorld(map.get("width"),map.get("height"));
+		world = new GameWorld(map);
 		
 	}
 	
