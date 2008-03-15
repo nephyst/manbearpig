@@ -2,12 +2,9 @@ package actors;
 
 import java.util.ArrayList;
 
-import GameWorld.Perception;
-
 import rules.Action;
 import rules.Rule;
-
-
+import GameWorld.Perception;
 
 public class Actor extends GameObject {
 
@@ -50,16 +47,32 @@ public class Actor extends GameObject {
 	public Actor mutate(Actor other) {
 		ArrayList<Rule> newRule = new ArrayList<Rule>();
 		for (int i = 0; i < 4; i++) {
-			int r = (int)(Math.random() * 2);
-			if (r == 1){
+			int r = (int) (Math.random() * 2);
+			if (r == 1) {
 				newRule.add(this.getRule(i));
 			} else {
 				newRule.add(other.getRule(i));
 			}
 		}
-		int r = (int)(Math.random() * 4);
+		int r = (int) (Math.random() * 4);
 		newRule.add(newRule.get(r).mutate());
 		newRule.remove(r);
-		return new Actor(this.getX(), this.getY(),this.getType(), true, newRule);
+		return new Actor(this.getX(), this.getY(), this.getType(), true,
+				newRule);
+	}
+
+	public boolean canEat(Actor other) {
+		boolean ret = true;
+		if (!other.isAlive()) {
+			ret = false;
+		} else if (this.getType() == ObjectType.PREY &&
+				   other.getType() != ObjectType.FOOD) {
+			ret = false;
+		} else if (this.getType() == ObjectType.HUNTER &&
+					other.getType() != ObjectType.PREY) {
+			ret = false;
+		}
+
+		return ret;
 	}
 }
