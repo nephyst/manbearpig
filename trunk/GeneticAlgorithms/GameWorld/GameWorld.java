@@ -16,7 +16,9 @@ public class GameWorld {
 	
 	private int turnCount = 0;
 	private int generation = 0;
-	private int regeneration = 10;
+	private int regenRate = 10;
+	private int regenTurn = 20;
+	private int regenCounter = regenTurn;
 	
 	private GameObject[][] world;
 	private ArrayList<Actor> actors;
@@ -35,13 +37,18 @@ public class GameWorld {
 	
 	public void spawnNewFood(){
 		
+		Random rand = new Random();
+		int random = rand.nextInt(10000);
+		
 		for(int i = 1;i < (width - 1);i++){
 			for (int j = 1;j <(height - 1);j++){
 				
 				if (world[i][j].getType() == ObjectType.NONE){
-					
-					
-					
+					if (random < regenRate){
+						
+						this.addFood(i, j);
+						
+					}
 				}
 			}
 		}
@@ -242,6 +249,13 @@ public class GameWorld {
 		}
 		
 		this.removeKilled(this.actors);
+		
+		if (this.regenCounter > 0){
+			this.regenCounter = this.regenCounter - 1;
+		}else{
+			this.spawnNewFood();
+			this.regenCounter = this.regenTurn;
+		}
 		
 	}
 	
