@@ -218,13 +218,13 @@ public class GameWorld {
 			// mate
 		} else if (actor.getType() == ObjectType.HUNTER
 				&& other.getType() == ObjectType.FOOD) {
-			GameObject food = world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)];
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
-			world[actor.getX()][actor.getY()] = food;
+			world[actor.getX()][actor.getY()] = other;
+			world[actor.getX()][actor.getY()] = other;
 			actor.setX(translateX(actor.getX() + dx));
 			actor.setY(translateY(actor.getY() + dy));
-			food.setX(translateX(food.getX()));
-			food.setY(translateY(food.getY()));
+			other.setX(translateX(actor.getX()));
+			other.setY(translateY(actor.getY()));
 
 		}
 	}
