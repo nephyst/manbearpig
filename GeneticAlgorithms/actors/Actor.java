@@ -19,6 +19,10 @@ public class Actor extends GameObject {
 			this.rules = new Rules();
 
 	}
+	
+	public boolean isSpawn(){
+		return this.spawn;
+	}
 
 	public Actor(int x, int y, ObjectType type, boolean isAlive, Rules rules) {
 		super(x, y, type, isAlive);
