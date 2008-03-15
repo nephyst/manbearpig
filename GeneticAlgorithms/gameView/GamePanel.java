@@ -78,11 +78,6 @@ public class GamePanel extends JPanel {
 					case PREY:
 						c = Color.blue;
 						
-						if (((Actor)(current)).isSpawn()){
-							
-							c = Color.orange;
-						}
-						
 						break;
 
 					case HUNTER:
