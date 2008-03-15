@@ -79,7 +79,7 @@ public class Actor extends GameObject {
 				   other.isAlive()) {
 			ret = true;
 		} else if (this.getType() == ObjectType.HUNTER &&
-					other.getType() != ObjectType.PREY &&
+					other.getType() == ObjectType.PREY &&
 					other.isAlive()) {
 			ret = true;
 		}
