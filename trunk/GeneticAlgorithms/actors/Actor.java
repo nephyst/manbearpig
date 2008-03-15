@@ -60,9 +60,6 @@ public class Actor extends GameObject {
 	}
 
 	public Actor spawn() {
-		if (this.spawn) {
-			System.out.println("Spawn of Spawn");
-		}
 		Rules r = this.rules.mutate();
 		return new Actor(this.getX(), this.getY(), this.getType(), true, r);
 	}
