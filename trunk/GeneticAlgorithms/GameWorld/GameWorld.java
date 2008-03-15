@@ -239,11 +239,19 @@ public class GameWorld {
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
 			actor.setX(translateX(actor.getX() + dx));
 			actor.setY(translateY(actor.getY() + dy));
+			if (actor.getEnergy() > 250) {
+				System.out.println("I HAS BABBEIS");
+				Actor child = actor.spawn();
+				world[translateX(actor.getX() - dx)][translateY(actor.getY() - dy)] = child;
+				child.setEnergy(250);
+				actor.setEnergy(actor.getEnergy() - 250);
+				this.actors.add(child);
+			}
 		} else if (actor.canEat(other)) {
 			actor.addEnergy(this.energyGained);
 			other.setAlive(false);
 		} else if (other.getType() == actor.getType()) {
-			// mate
+			// mate?
 		} else if (actor.getType() == ObjectType.HUNTER
 				&& other.getType() == ObjectType.FOOD) {
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;

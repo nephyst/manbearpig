@@ -56,6 +56,9 @@ public class Actor extends GameObject {
 		Rules r = this.rules.mutate();
 		return new Actor(this.getX(), this.getY(), this.getType(), true, r);
 	}
+	public void setEnergy(int amount) {
+		this.energy = amount;
+	}
 	
 	// public Actor mutate(Actor other) {
 	// ArrayList<Rules> newRule = new ArrayList<Rules>();
