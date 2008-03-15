@@ -14,6 +14,10 @@ public class GameWorld {
 	private int width;
 	private int height;
 	
+	private int turnCount = 0;
+	private int generation = 0;
+	private int regeneration = 10;
+	
 	private GameObject[][] world;
 	private ArrayList<Actor> actors;
 	
@@ -27,6 +31,20 @@ public class GameWorld {
 		this.initWorld();
 		this.loadRandomWorld(100, 100, 50);
 		
+	}
+	
+	public void spawnNewFood(){
+		
+		for(int i = 1;i < (width - 1);i++){
+			for (int j = 1;j <(height - 1);j++){
+				
+				if (world[i][j].getType() == ObjectType.NONE){
+					
+					
+					
+				}
+			}
+		}
 	}
 	
 	public void addPrey(int x, int y){
@@ -136,17 +154,19 @@ public class GameWorld {
 		
 	}
 	public void doAction(Actor actor, int dx, int dy) {
+		
 		GameObject other = world[actor.getX() + dx][actor.getY() + dy];
+		
 		if (other.getType() == ObjectType.NONE) {
 			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
 			world[actor.getX() + dx][actor.getY() + dy] = actor;
 			actor.setX(actor.getX() + dx);
 			actor.setY(actor.getY() + dy);
-		} //else if (other.getType() == actor.getType()) {
+		} else if (other.getType() == actor.getType()) {
 			//mate
-		//} else if () {
-			
-		//} //else wall : nothing
+		} else if (actor.canEat(other)) {
+			//Actor Eats other
+		}
 	}
 	public void simulateActor(Actor actor,Action action){
 		
@@ -167,6 +187,8 @@ public class GameWorld {
 		case NONE:
 			break;
 		}
+		
+		//RANDOM RULES NEEDS TO BE CODED
 	}
 	
 	public void randomizeList(ArrayList<Actor> actorList){
