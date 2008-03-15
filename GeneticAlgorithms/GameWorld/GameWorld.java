@@ -10,7 +10,7 @@ import rules.*;
 
 public class GameWorld {
 
-	
+	private Random rand;
 	private int width;
 	private int height;
 	
@@ -20,24 +20,29 @@ public class GameWorld {
 	private int regenTurn = 20; //How many turns until food is spawned
 	private int regenCounter = regenTurn; //Counter for food respawn
 	
+	private int preyEnergy = 100;
+	private int hunterEnergy = 100;
+	private int foodEnergy = 100;
+	private int energyGained = 10;
+	
 	private GameObject[][] world;
 	private ArrayList<Actor> actors;
 	
 	
 	public GameWorld(int width, int height){
 		
+		this.rand = new Random();
 		this.width = width;
 		this.height = height;
 		this.world = new GameObject[width][height];
 		this.actors = new ArrayList<Actor>();
 		this.initWorld();
-		this.loadRandomWorld(100, 100, 50);
+		this.loadRandomWorld(100, 100, 50,10);
 		
 	}
 	
 	public void spawnNewFood(){
 		
-		Random rand = new Random();
 		int random;
 		
 		for(int i = 1;i < (width - 1);i++){
@@ -56,15 +61,22 @@ public class GameWorld {
 	
 	public void addPrey(int x, int y){
 		
-		Actor prey = new Actor(x,y,ObjectType.PREY,true);
+		Actor prey = new Actor(x,y,ObjectType.PREY,true,this.preyEnergy);
 		world[x][y] = prey;
 		actors.add(prey);
 		
 	}
 	
+	public void addWall(int x, int y){
+		
+		GameObject obj = new GameObject(x,y,ObjectType.WALL,false);
+		world[x][y] = obj;
+		
+	}
+	
 	public void addHunter(int x,int y){
 		
-		Actor hunter = new Actor(x,y,ObjectType.HUNTER,true);
+		Actor hunter = new Actor(x,y,ObjectType.HUNTER,true,this.hunterEnergy);
 		world[x][y] = hunter;
 		actors.add(hunter);
 		
@@ -72,8 +84,8 @@ public class GameWorld {
 	
 	public void addFood(int x,int y){
 		
-		Actor food = new Actor(x,y,ObjectType.FOOD,true);
-		world[x][y] = food;
+		Actor food = new Actor(x,y,ObjectType.FOOD,true,this.foodEnergy);
+		world[x][y] = food;	
 		actors.add(food);
 		
 	}
@@ -89,6 +101,25 @@ public class GameWorld {
 					
 			}
 		}
+		
+	}
+	
+	public void addRock(int x, int y){
+			
+		int random = rand.nextInt(8);
+		
+		for(int i = 0;i < random;i++){
+			
+			if (world[x][y].getType() == ObjectType.NONE){
+				this.addWall(x, y);
+			}
+			
+			x = translateX(x + rand.nextInt(3) - 1);
+			y = translateY(y + rand.nextInt(3) - 1);
+			
+		}
+		
+		
 	}
 	
 	public void loadWorld1(){
@@ -122,9 +153,8 @@ public class GameWorld {
 		
 	}
 	
-	public void loadRandomWorld(int prey,int food,int hunter){
+	public void loadRandomWorld(int prey,int food,int hunter,int rocks){
 		
-		Random rand = new Random();
 		int random = 0;
 		
 		if ((random + prey + food) <= 10000){
@@ -140,9 +170,12 @@ public class GameWorld {
 						this.addFood(i, j);
 					}else if (random >= (prey + food) && random < (prey + food + hunter)){
 						this.addHunter(i, j);
+					}else if (random >= (prey + food + hunter) && random < (prey + food + hunter + rocks)){
+						this.addRock(i, j);
 					}
 				}
 			}
+			
 		}else{
 			this.loadWorld1();
 		}
@@ -157,16 +190,19 @@ public class GameWorld {
 		
 		GameObject other = world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)];
 		
-		if (other.getType() == ObjectType.NONE) {
+		actor.subtractEnergy(1);
+		
+		if (other.getType() == ObjectType.NONE && !(dx == 0 && dy == 0)) {
 			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
 			actor.setX(translateX(actor.getX() + dx));
 			actor.setY(translateY(actor.getY() + dy));
-		} else if (other.getType() == actor.getType()) {
+		}else if (actor.canEat(other)) {
+			actor.addEnergy(this.energyGained);
+			//other.setAlive(false);
+		}else if (other.getType() == actor.getType()) {
 			//mate
-		} else if (actor.canEat(other)) {
-			//Actor Eats other
-		}
+		} 
 	}
 	
 	public int translateX(int x){
@@ -216,6 +252,7 @@ public class GameWorld {
 			this.doAction(actor, 1, 0);
 		break;
 		case NONE:
+			this.doAction(actor, 0, 0);
 			break;
 		}
 		
@@ -223,7 +260,6 @@ public class GameWorld {
 	
 	public void randomizeList(ArrayList<Actor> actorList){
 		
-		Random rand = new Random();
 		ArrayList<Actor> newList = new ArrayList<Actor>();
 		int length = actorList.size();
 		
