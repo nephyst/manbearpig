@@ -18,7 +18,7 @@ public class GameWorld {
 
 	private int generation = 0;
 
-	private int regenRate = 10; // Chance that a piece of food will be spawned
+	private int regenRate = 100; // Chance that a piece of food will be spawned
 
 	private int regenTurn = 1; // How many turns until food is spawned
 
@@ -220,11 +220,12 @@ public class GameWorld {
 				&& other.getType() == ObjectType.FOOD) {
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
 			world[actor.getX()][actor.getY()] = other;
-			world[actor.getX()][actor.getY()] = other;
+			int x = actor.getX();
+			int y = actor.getY();
 			actor.setX(translateX(actor.getX() + dx));
 			actor.setY(translateY(actor.getY() + dy));
-			other.setX(translateX(actor.getX()));
-			other.setY(translateY(actor.getY()));
+			other.setX(x);
+			other.setY(y);
 
 		}
 	}

@@ -9,7 +9,7 @@ public class Main {
 		
 		int width = 80;
 		int height = 60;
-		int ms = 200;
+		int ms = 20;
 		
 		
 		GameFrame frame = new GameFrame(width,height,ms);
