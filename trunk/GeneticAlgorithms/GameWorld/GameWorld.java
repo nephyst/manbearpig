@@ -18,19 +18,19 @@ public class GameWorld {
 
 	private int generation = 0;
 
-	private int regenRate = 100; // Chance that a piece of food will be spawned
+	private int regenRate = 10; // Chance that a piece of food will be spawned
 
-	private int regenTurn = 1; // How many turns until food is spawned
+	private int regenTurn = 2; // How many turns until food is spawned
 
 	private int regenCounter = regenTurn; // Counter for food respawn
 
-	private int preyEnergy = 1;
+	private int preyEnergy = 250;
 
 	private int hunterEnergy = 1;
 
 	private int foodEnergy = 1;
 
-	private int energyGained = 35;
+	private int energyGained = 30;
 
 	private GameObject[][] world;
 
@@ -213,7 +213,6 @@ public class GameWorld {
 		} else if (actor.canEat(other)) {
 			actor.addEnergy(this.energyGained);
 			other.setAlive(false);
-			System.out.println(actor.getType() + " ate " + other.getType());
 		} else if (other.getType() == actor.getType()) {
 			// mate
 		} else if (actor.getType() == ObjectType.HUNTER
