@@ -12,8 +12,7 @@ import javax.swing.Timer;
 import javax.swing.JPanel;
 
 import GameWorld.GameWorld;
-import actors.GameObject;
-import actors.ObjectType;
+import actors.*;
 
 public class GamePanel extends JPanel {
 
@@ -79,6 +78,10 @@ public class GamePanel extends JPanel {
 					case PREY:
 						c = Color.blue;
 						
+						if (((Actor)(current)).isSpawn()){
+							
+							c = Color.orange;
+						}
 						
 						break;
 
@@ -91,12 +94,11 @@ public class GamePanel extends JPanel {
 						break;
 					}
 
-					if (c != Color.WHITE) {
+					
 						g2d.setColor(c);
 						g2d.fillRect(current.getX() * blockWidth, current
 								.getY()
 								* blockHeight, blockWidth, blockHeight);
-					}
 				}
 			}
 		}
