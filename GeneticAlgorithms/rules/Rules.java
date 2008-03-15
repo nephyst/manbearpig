@@ -26,6 +26,15 @@ public class Rules {
 		random = new ArrayList<SimpleRule>();
 		generateRandomRules();
 	}
+	
+	public Rules(ArrayList<SimpleRule>[] rules) { 
+		this.up = rules[0];
+		this.down = rules[1];
+		this.left = rules[2];
+		this.right = rules[3];
+		this.random = rules[4];
+	}
+	
 
 	public void generateRandomRules() {
 		for (int i = 0; i < 4; i++) {
@@ -40,7 +49,7 @@ public class Rules {
 		for (int i = 0; i < 4; i++) {
 			right.add(new SimpleRule());
 		}
-		for (int i = 0; i < 6; i++) {
+		for (int i = 0; i < 4; i++) {
 			random.add(new SimpleRule());
 		}
 	}
@@ -91,20 +100,66 @@ public class Rules {
 		Random r = new Random();
 		return action.get(r.nextInt(action.size()));
 	}
-
-	/*
-	 * public Rules mutate() { Random r = new Random(); int i = r.nextInt(4);
-	 * 
-	 * Direction directions[] = Direction.values(); ObjectType objectTypes[] =
-	 * ObjectType.values(); Action actions[] = Action.values();
-	 * 
-	 * Direction newDir = this.direction; boolean newHas = has; ObjectType
-	 * newType = objectType; Action newAct = action;
-	 * 
-	 * switch (i) { case 0: newDir = directions[r.nextInt(directions.length)];
-	 * break; case 1: newType = objectTypes[r.nextInt(objectTypes.length)];
-	 * break; case 2: newAct = actions[r.nextInt(actions.length)]; break; case
-	 * 3: newHas = (r.nextInt(2) == 0); break; } return new Rules(newDir,
-	 * newHas, newType, newAct); }
-	 */
+	
+	public Rules mutate() {
+		
+		ArrayList<SimpleRule> upClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> downClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> leftClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> rightClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> randomClone = new ArrayList<SimpleRule>();
+		
+		for (SimpleRule r : up) {
+			upClone.add(r.clone());
+		}
+		for (SimpleRule r : down) {
+			downClone.add(r.clone());
+		}
+		for (SimpleRule r : left) {
+			leftClone.add(r.clone());
+		}
+		for (SimpleRule r : right) {
+			rightClone.add(r.clone());
+		}
+		for (SimpleRule r : random) {
+			randomClone.add(r.clone());
+		}
+		
+		Random r = new Random();
+		int i = r.nextInt(5);
+		int j = r.nextInt(4);
+		switch (i) {
+		case 0:
+			upClone.remove(j);
+			upClone.add(new SimpleRule());
+			break;
+		case 1:
+			downClone.remove(j);
+			downClone.add(new SimpleRule());
+			break;
+			
+		case 2:
+			leftClone.remove(j);
+			leftClone.add(new SimpleRule());
+			break;
+			
+		case 3:
+			rightClone.remove(j);
+			rightClone.add(new SimpleRule());
+			break;
+			
+		case 4:
+			randomClone.remove(j);
+			randomClone.add(new SimpleRule());
+			break;
+		}
+		
+		ArrayList<SimpleRule> ruleList[] = (ArrayList<SimpleRule>[])new ArrayList[5];
+		ruleList[0] = upClone;
+		ruleList[1] = downClone;
+		ruleList[2] = leftClone;
+		ruleList[3] = rightClone;
+		ruleList[4] = randomClone;
+		return new Rules(ruleList);
+	}
 }

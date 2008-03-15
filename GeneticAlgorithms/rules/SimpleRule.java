@@ -34,4 +34,7 @@ public class SimpleRule {
 		}
 		return 0;
 	}
+	public SimpleRule clone() {
+		return new SimpleRule(type, desire, direction);
+	}
 }

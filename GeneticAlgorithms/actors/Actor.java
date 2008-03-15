@@ -52,6 +52,11 @@ public class Actor extends GameObject {
 		return Action.NONE;
 	}
 
+	public Actor spawn() {
+		Rules r = this.rules.mutate();
+		return new Actor(this.getX(), this.getY(), this.getType(), true, r);
+	}
+	
 	// public Actor mutate(Actor other) {
 	// ArrayList<Rules> newRule = new ArrayList<Rules>();
 	// for (int i = 0; i < 4; i++) {
