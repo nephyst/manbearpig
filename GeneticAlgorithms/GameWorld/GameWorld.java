@@ -52,8 +52,8 @@ public class GameWorld {
 
 		int random;
 
-		for (int i = 1; i < (width - 1); i++) {
-			for (int j = 1; j < (height - 1); j++) {
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
 
 				random = rand.nextInt(10000);
 
@@ -164,8 +164,8 @@ public class GameWorld {
 
 		if ((random + prey + food) <= 10000) {
 
-			for (int i = 1; i < (width - 1); i++) {
-				for (int j = 1; j < (height - 1); j++) {
+			for (int i = 0; i < width; i++) {
+				for (int j = 0; j < height; j++) {
 
 					random = rand.nextInt(10000);
 
