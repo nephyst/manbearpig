@@ -16,7 +16,8 @@ public class Actor extends GameObject {
 	
 	public Actor(int x, int y, ObjectType type, boolean isAlive) {
 		super(x, y, type, isAlive);
-		this.rules = new Rules();
+		if (type == ObjectType.PREY)
+			this.rules = new Rules();
 
 	}
 
@@ -27,7 +28,12 @@ public class Actor extends GameObject {
 	}
 
 	public Action getNextAction(Perception percept) {
-		return rules.getAction(percept);
+		if (this.getType() == ObjectType.PREY) {
+			return rules.getAction(percept);
+		} else if (this.getType() == ObjectType.HUNTER) {
+			return Action.RANDOM;
+		}
+		return Action.NONE;
 	}
 
 //	public Actor mutate(Actor other) {

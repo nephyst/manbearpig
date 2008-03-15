@@ -24,7 +24,7 @@ public class SimpleRule {
 		ObjectType objects[] = ObjectType.values();
 		
 		this.type = objects[r.nextInt(5)];
-		this.desire = r.nextInt();
+		this.desire = 1;//r.nextInt(2) + 1;
 		this.direction = directions[r.nextInt(9)];
 	}
 
