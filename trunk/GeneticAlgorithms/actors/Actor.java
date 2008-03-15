@@ -1,7 +1,6 @@
 package actors;
 
 import java.util.ArrayList;
-
 import rules.Action;
 import rules.Rules;
 import GameWorld.Perception;
@@ -9,13 +8,12 @@ import GameWorld.Perception;
 public class Actor extends GameObject {
 
 	private int energy;
-
-	private int life;
 	
 	private Rules rules;
 	
-	public Actor(int x, int y, ObjectType type, boolean isAlive) {
+	public Actor(int x, int y, ObjectType type, boolean isAlive,int energy) {
 		super(x, y, type, isAlive);
+		this.energy = energy;
 		if (type == ObjectType.PREY)
 			this.rules = new Rules();
 
@@ -26,12 +24,32 @@ public class Actor extends GameObject {
 		super(x, y, type, isAlive);
 		this.rules = rules;
 	}
+	
+	public void addEnergy(int eng){
+		this.energy = this.energy + eng;
+	}
+	
+	public void subtractEnergy(int eng){
+		this.energy = this.energy - eng;
+	}
+	
+	public int getEnergy(){
+		
+		return this.energy;
+		
+	}
 
 	public Action getNextAction(Perception percept) {
-		if (this.getType() == ObjectType.PREY) {
-			return rules.getAction(percept);
-		} else if (this.getType() == ObjectType.HUNTER) {
-			return Action.RANDOM;
+		
+		if (this.energy <= 0){
+			this.setAlive(false);
+		}else{
+			
+			if (this.getType() == ObjectType.PREY) {
+				return rules.getAction(percept);
+			} else if (this.getType() == ObjectType.HUNTER) {
+				return Action.RANDOM;
+			}
 		}
 		return Action.NONE;
 	}
