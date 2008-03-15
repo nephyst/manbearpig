@@ -3,7 +3,7 @@ package actors;
 import java.util.ArrayList;
 
 import rules.Action;
-import rules.Rule;
+import rules.Rules;
 import GameWorld.Perception;
 
 public class Actor extends GameObject {
@@ -12,17 +12,17 @@ public class Actor extends GameObject {
 
 	private int life;
 
-	private ArrayList<Rule> rules;
+	private ArrayList<Rules> rules;
 
 	public Actor(int x, int y, ObjectType type, boolean isAlive) {
 		super(x, y, type, isAlive);
 
-		this.rules = new ArrayList<Rule>();
-		rules.add(new Rule()); // generate random rules
+		this.rules = new ArrayList<Rules>();
+		rules.add(new Rules()); // generate random rules
 	}
 
 	public Actor(int x, int y, ObjectType type, boolean isAlive,
-			ArrayList<Rule> rules) {
+			ArrayList<Rules> rules) {
 		super(x, y, type, isAlive);
 		this.rules = rules;
 	}
@@ -30,7 +30,7 @@ public class Actor extends GameObject {
 	public Action getNextAction(Perception percept) {
 
 		if (this.isAlive() && this.getType() != ObjectType.FOOD) {
-			for (Rule r : this.rules) {
+			for (Rules r : this.rules) {
 				if (r.checkRule(percept)) {
 					return r.getAction();
 				}
@@ -40,12 +40,12 @@ public class Actor extends GameObject {
 
 	}
 
-	public Rule getRule(int i) {
+	public Rules getRule(int i) {
 		return this.rules.get(i);
 	}
 
 	public Actor mutate(Actor other) {
-		ArrayList<Rule> newRule = new ArrayList<Rule>();
+		ArrayList<Rules> newRule = new ArrayList<Rules>();
 		for (int i = 0; i < 4; i++) {
 			int r = (int) (Math.random() * 2);
 			if (r == 1) {
