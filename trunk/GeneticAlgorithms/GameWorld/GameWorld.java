@@ -1,10 +1,14 @@
 package GameWorld;
 
 import java.util.ArrayList;
-import actors.*;
 import java.util.HashMap;
+import java.util.PriorityQueue;
 import java.util.Random;
-import rules.*;
+
+import rules.Action;
+import actors.Actor;
+import actors.GameObject;
+import actors.ObjectType;
 
 public class GameWorld {
 
@@ -30,6 +34,8 @@ public class GameWorld {
 	private GameObject[][] world;
 
 	private ArrayList<Actor> actors;
+	
+	private PriorityQueue<Actor> dead = new PriorityQueue<Actor>();
 
 //	public GameWorld(int width, int height) {
 //
@@ -339,6 +345,7 @@ public class GameWorld {
 				newList.add(actorList.get(i));
 			} else {
 				Actor a = actorList.get(i);
+				dead.offer(a);
 				world[a.getX()][a.getY()] = new GameObject(a.getX(), a.getY(),
 						ObjectType.NONE, false);
 			}
@@ -370,6 +377,8 @@ public class GameWorld {
 		} else {
 			this.spawnNewFood();
 			this.regenCounter = this.regenTurn;
+			//for (Actor a : dead)
+				System.out.println(dead.peek().getFitness());
 		}
 
 	}
