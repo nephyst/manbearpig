@@ -9,6 +9,8 @@ public class Actor extends GameObject {
 	private int energy;
 
 	private Rules rules;
+	
+	private boolean spawn = false;
 
 	public Actor(int x, int y, ObjectType type, boolean isAlive, int energy) {
 		super(x, y, type, isAlive);
@@ -21,6 +23,7 @@ public class Actor extends GameObject {
 	public Actor(int x, int y, ObjectType type, boolean isAlive, Rules rules) {
 		super(x, y, type, isAlive);
 		this.rules = rules;
+		this.spawn = true;
 	}
 
 	public void addEnergy(int eng) {
