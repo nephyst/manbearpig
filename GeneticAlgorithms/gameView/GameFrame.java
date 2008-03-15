@@ -12,8 +12,8 @@ public class GameFrame extends JFrame{
 
 	private GameWorld world;
 	
-	private final int windowWidth = 1024;
-	private final int windowHeight = 768;
+	private int windowWidth = 1024;
+	private int windowHeight = 768;
 	private final int ms;
 	
 	private Toolkit kit = Toolkit.getDefaultToolkit();
@@ -22,9 +22,11 @@ public class GameFrame extends JFrame{
 	
 	public GameFrame(HashMap<String,Integer> map){
 		
-		Dimension d = this.getCorrectDimension(map.get("width"), map.get("height"));
-		
 		this.ms = map.get("ms");
+		this.windowWidth = map.get("windowWidth");
+		this.windowHeight = map.get("windowHeight");
+		
+		Dimension d = this.getCorrectDimension(map.get("width"), map.get("height"));
 		
 		this.setUpWorld(map);
 		this.addComponents(d);
