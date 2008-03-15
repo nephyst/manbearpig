@@ -239,7 +239,6 @@ public class GameWorld {
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
 			
 			if (actor.getEnergy() > 250) {
-				System.out.println("I HAS BABBEIS");
 				Actor child = actor.spawn();
 				world[translateX(actor.getX())][translateY(actor.getY())] = child;
 				child.setEnergy(250);
