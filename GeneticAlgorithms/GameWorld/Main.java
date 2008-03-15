@@ -8,28 +8,37 @@ public class Main {
 	
 	public static void main(String args[]){
 		
-		HashMap<String,Integer> map = new HashMap<String,Integer>();
-		map.put("width", 8);
-		map.put("height", 6);
+HashMap<String,Integer> map = new HashMap<String,Integer>();
 		
-		map.put("windowWidth",800);
-		map.put("windowHeight",600);
+		//Number of cells in the game world
+		map.put("width", 80); //Width
+		map.put("height", 60); //Height
+		
+		//Size of the window (Resolution)
+		map.put("windowWidth",800); //Width
+		map.put("windowHeight",600); //Height
 
+		//Tick rate of the clock
 		map.put("ms", 100);
 		
-		map.put("regenRate",30);
-		map.put("regenTurn", 1);
+		//Regeneration control for the food
+		map.put("regenRate",30); //Chance that food will be spawned
+		map.put("regenTurn", 5); //How many turns until food is spawned
 		
-		map.put("preyEnergy", 250);
-		map.put("hunterEnergy", 1);
-		map.put("foodEnergy", 300);
+		//Adjusts how long actors will live
+		map.put("preyEnergy", 250); //How long prey will live
+		map.put("hunterEnergy", 1); //How log hunters will live
+		map.put("foodEnergy", 300); //How long food will live
 		
-		map.put("energyGained", 200);
+		//When eating, how much energy is gained
+		map.put("energyGained", 30); 
 		
-		map.put("preyCount",300);
-		map.put("foodCount", 300);
-		map.put("hunterCount",00);
-		map.put("rockCount", 10);
+		//Values used for building the initial world
+		//(N / 10000) chance for a object to be spawned
+		map.put("preyCount",100); //Number of prey
+		map.put("foodCount", 300); //Number of food
+		map.put("hunterCount",50); //number of hunters
+		map.put("rockCount", 10); //number of rocks
 		
 		GameFrame frame = new GameFrame(map);
 		
