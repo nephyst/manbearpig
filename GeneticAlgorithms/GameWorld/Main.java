@@ -17,7 +17,7 @@ HashMap<String,Integer> map = new HashMap<String,Integer>();
 		map.put("windowHeight",600); //Height
 
 		//Tick rate of the clock
-		map.put("ms", 100);
+		map.put("ms", 10);
 		
 		//Regeneration control for the food
 		map.put("regenRate",30); //Chance that food will be spawned

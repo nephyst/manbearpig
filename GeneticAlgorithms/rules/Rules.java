@@ -160,6 +160,10 @@ public class Rules {
 		ruleList[2] = leftClone;
 		ruleList[3] = rightClone;
 		ruleList[4] = randomClone;
-		return new Rules(ruleList);
+		Rules rlz = new Rules(ruleList);
+		if (rlz == null) {
+				System.out.println("SOMEHOW WE HAVE A NULL RULES");
+		}
+		return rlz;
 	}
 }

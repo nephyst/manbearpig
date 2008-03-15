@@ -4,7 +4,7 @@ import rules.Action;
 import rules.Rules;
 import GameWorld.Perception;
 
-public class Actor extends GameObject {
+public class Actor extends GameObject implements Comparable {
 
 	private int energy;
 
@@ -22,6 +22,9 @@ public class Actor extends GameObject {
 	
 	public Actor(int x, int y, ObjectType type, boolean isAlive, Rules rules) {
 		super(x, y, type, isAlive);
+		if (rules == null) {
+				System.out.println("SOMEHOW WE HAVE A NULL RULES SPOT 3");
+		}
 		this.rules = rules;
 	}
 	
@@ -53,7 +56,11 @@ public class Actor extends GameObject {
 	}
 
 	public Actor spawn() {
-		Rules r = this.rules.mutate();
+		Rules r = rules.mutate();
+		if (r == null) {
+			System.out.println("SOMEHOW WE HAVE A NULL RULES SPOT 2");
+		}
+
 		return new Actor(this.getX(), this.getY(), this.getType(), true, r);
 	}
 	public void setEnergy(int amount) {
@@ -95,5 +102,10 @@ public class Actor extends GameObject {
 	
 	public int getFitness() {
 		return this.fitness;
+	}
+
+	public int compareTo(Object o) {
+		Integer i = this.fitness;
+		return -i.compareTo(((Actor)o).getFitness());
 	}
 }
