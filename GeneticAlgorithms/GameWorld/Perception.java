@@ -19,10 +19,38 @@ public class Perception {
 		for (int i = -1; i < 2; i++) {
 			for (int j = -1; j < 2; j++) {
 
-				percept[i + 1][j + 1] = board[x + i][y + j];
+				percept[i + 1][j + 1] = board[translateX((x + i),board)][translateY((y + j),board)];
 
 			}
 		}
+	}
+	
+	public int translateX(int x, GameObject[][] board){
+		
+		int width = board.length;
+		
+		if (x < 0){
+			return (width - 1);
+		}else if (x >= width){
+			return 0;
+		}
+		
+		return x;
+		
+	}
+	
+	public int translateY(int y, GameObject[][] board){
+		
+		int height = board[0].length;
+		
+		if (y < 0){
+			return (height - 1);
+		}else if (y >= height){
+			return 0;
+		}
+		
+		return y;
+		
 	}
 
 	public GameObject getDirection(Direction d) {
