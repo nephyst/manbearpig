@@ -9,13 +9,13 @@ public class Main {
 	public static void main(String args[]){
 		
 		HashMap<String,Integer> map = new HashMap<String,Integer>();
-		map.put("width", 40);
-		map.put("height", 30);
+		map.put("width", 8);
+		map.put("height", 6);
 		
-		map.put("windowWidth",1024);
-		map.put("windowHeight",768);
+		map.put("windowWidth",800);
+		map.put("windowHeight",600);
 
-		map.put("ms", 800);
+		map.put("ms", 100);
 		
 		map.put("regenRate",30);
 		map.put("regenTurn", 1);
