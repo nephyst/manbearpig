@@ -44,7 +44,7 @@ public class GamePanel extends JPanel {
 	}
 
 	public void paintComponent(Graphics g) {
-
+		
 		Graphics2D g2d = (Graphics2D) g;
 
 		g2d.setColor(Color.white);
@@ -93,12 +93,11 @@ public class GamePanel extends JPanel {
 						c = Color.gray;
 						break;
 					}
-
 					
-						g2d.setColor(c);
-						g2d.fillRect(current.getX() * blockWidth, current
-								.getY()
-								* blockHeight, blockWidth, blockHeight);
+					
+					g2d.setColor(c);
+					g2d.fillRect(current.getX() * blockWidth, current.getY()
+							* blockHeight, blockWidth, blockHeight);
 				}
 			}
 		}
