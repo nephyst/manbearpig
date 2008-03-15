@@ -45,14 +45,6 @@ public class GameWorld {
 		
 	}
 	
-	public void addWumpus(int x,int y){
-		
-		Actor hunter = new Actor(x,y,ObjectType.WUMPUS,true);
-		world[x][y] = hunter;
-		actors.add(hunter);
-		
-	}
-	
 	public void addFood(int x,int y){
 		
 		Actor food = new Actor(x,y,ObjectType.FOOD,true);
