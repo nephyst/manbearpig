@@ -15,13 +15,13 @@ public class Main {
 		
 		map.put("ms", 20);
 		
-		map.put("regenRate",300);
+		map.put("regenRate",30);
 		map.put("regenTurn", 10);
 		
 		map.put("preyEnergy", 250);
 		map.put("hunterEnergy", 1);
 		map.put("foodEnergy", 300);
-		map.put("foodEnergy", 30);
+		map.put("foodEnergy", 300);
 		
 		map.put("energyGained", 30);
 		
