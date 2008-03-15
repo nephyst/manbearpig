@@ -2,6 +2,7 @@ package GameWorld;
 
 import java.util.ArrayList;
 import actors.*;
+
 import java.util.Random;
 import rules.*;
 
@@ -165,24 +166,16 @@ public class GameWorld {
 		switch (action){
 		
 		case UP:
-			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
-			world[actor.getX()][actor.getY() -1] = actor;
-			actor.setY(actor.getY() -1);
+			this.doAction(actor, 0, -1);	
 		break;
 		case DOWN:
-			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
-			world[actor.getX()][actor.getY() +1] = actor;
-			actor.setY(actor.getY() + 1);
+			this.doAction(actor, 0, 1);
 		break;
 		case LEFT:
-			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
-			world[actor.getX() - 1][actor.getY()] = actor;
-			actor.setX(actor.getX() - 1);
+			this.doAction(actor, -1, 0);
 		break;
 		case RIGHT:
-			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),actor.getY(),ObjectType.NONE,false);
-			world[actor.getX() + 1][actor.getY()] = actor;
-			actor.setX(actor.getX() + 1);
+			this.doAction(actor, 1, 0);
 		break;
 		case NONE:
 			break;

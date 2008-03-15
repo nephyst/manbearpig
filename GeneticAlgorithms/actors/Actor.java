@@ -1,10 +1,13 @@
-package rules;
+package actors;
 
 import java.util.ArrayList;
 
+import GameWorld.Perception;
 
-import actors.GameObject;
-import actors.ObjectType;
+import rules.Action;
+import rules.Rule;
+
+
 
 public class Actor extends GameObject {
 

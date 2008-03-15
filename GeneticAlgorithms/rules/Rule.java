@@ -2,6 +2,7 @@ package rules;
 
 import java.util.Random;
 
+import GameWorld.Perception;
 import actors.ObjectType;
 
 
