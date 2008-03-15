@@ -61,7 +61,7 @@ public class Actor extends GameObject {
 				newRule);
 	}
 
-	public boolean canEat(Actor other) {
+	public boolean canEat(GameObject other) {
 		boolean ret = true;
 		if (!other.isAlive()) {
 			ret = false;
