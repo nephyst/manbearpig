@@ -10,7 +10,8 @@ public class Actor extends GameObject {
 
 	private Rules rules;
 	
-
+	private int fitness;
+	
 	public Actor(int x, int y, ObjectType type, boolean isAlive, int energy) {
 		super(x, y, type, isAlive);
 		this.energy = energy;
@@ -29,17 +30,15 @@ public class Actor extends GameObject {
 	}
 
 	public void subtractEnergy(int eng) {
+		this.fitness++;
 		this.energy = this.energy - eng;
 	}
 
 	public int getEnergy() {
-
 		return this.energy;
-
 	}
 
 	public Action getNextAction(Perception percept) {
-
 		if (this.energy <= 0) {
 			this.setAlive(false);
 		} else {
@@ -92,5 +91,9 @@ public class Actor extends GameObject {
 		}
 
 		return ret;
+	}
+	
+	public int getFitness() {
+		return this.fitness;
 	}
 }

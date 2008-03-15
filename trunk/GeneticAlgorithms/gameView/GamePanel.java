@@ -77,7 +77,6 @@ public class GamePanel extends JPanel {
 
 					case PREY:
 						c = Color.blue;
-						
 						break;
 
 					case HUNTER:
@@ -88,7 +87,6 @@ public class GamePanel extends JPanel {
 						c = Color.gray;
 						break;
 					}
-					
 					
 					g2d.setColor(c);
 					g2d.fillRect(current.getX() * blockWidth, current.getY()

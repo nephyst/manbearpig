@@ -25,12 +25,6 @@ public class GameWorld {
 	private int foodEnergy;// = 300;
 	private int energyGained;// = 30;
 	
-	// (N / 10000) chance of spawning
-	private int preyCount;// = 500;
-	private int foodCount;// = 100;
-	private int hunterCount;// = 30;
-	private int rockCount;// = 10;
-
 	private GameObject[][] world;
 
 	private ArrayList<Actor> actors;
@@ -64,17 +58,10 @@ public class GameWorld {
 		
 		this.energyGained = map.get("energyGained");
 		
-		this.preyCount = map.get("preyCount");
-		this.foodCount = map.get("foodCount");
-		this.hunterCount = map.get("hunterCount");
-		this.rockCount = map.get("rockCount");
-		
 		regenCounter = regenTurn;
 		
 		this.initWorld();
 		this.loadRandomWorld(map.get("preyCount"), map.get("foodCount"), map.get("hunterCount"), map.get("rockCount"));
-		
-		
 	}
 
 	public void spawnNewFood() {
