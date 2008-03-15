@@ -16,9 +16,9 @@ public class GameWorld {
 	
 	private int turnCount = 0;
 	private int generation = 0;
-	private int regenRate = 10;
-	private int regenTurn = 20;
-	private int regenCounter = regenTurn;
+	private int regenRate = 10; //Chance that a piece of food will be spawned
+	private int regenTurn = 20; //How many turns until food is spawned
+	private int regenCounter = regenTurn; //Counter for food respawn
 	
 	private GameObject[][] world;
 	private ArrayList<Actor> actors;
