@@ -47,67 +47,70 @@ public class GamePanel extends JPanel {
 		
 		Graphics2D g2d = (Graphics2D) g;
 
-		g2d.setColor(Color.white);
-		g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
-
-		int blockWidth = this.getWidth() / world.getWidth();
-		int blockHeight = this.getHeight() / world.getHeight();
-
-		GameObject[][] objects = world.getWorld();
-
-		for (int i = 0; i < world.getWidth(); i++) {
-			for (int j = 0; j < world.getHeight(); j++) {
-
-				GameObject current = objects[i][j];
-				ObjectType type = current.getType();
-
-				if (type != ObjectType.NONE) {
-
-					Color c = Color.white;
-
-					switch (type) {
-
-					case NONE:
-						c = Color.white;
-						break;
-
-					case FOOD:
-						c = Color.green;
-						break;
-
-					case PREY:
-						c = Color.blue;
-						break;
-
-					case HUNTER:
-						c = Color.red;
-						break;
-
-					case WALL:
-						c = Color.gray;
-						break;
+		if (this.isVisible()){
+			
+			g2d.setColor(Color.white);
+			g2d.fillRect(0, 0, this.getWidth(), this.getHeight());
+	
+			int blockWidth = this.getWidth() / world.getWidth();
+			int blockHeight = this.getHeight() / world.getHeight();
+	
+			GameObject[][] objects = world.getWorld();
+	
+			for (int i = 0; i < world.getWidth(); i++) {
+				for (int j = 0; j < world.getHeight(); j++) {
+	
+					GameObject current = objects[i][j];
+					ObjectType type = current.getType();
+	
+					if (type != ObjectType.NONE) {
+	
+						Color c = Color.white;
+	
+						switch (type) {
+	
+						case NONE:
+							c = Color.white;
+							break;
+	
+						case FOOD:
+							c = Color.green;
+							break;
+	
+						case PREY:
+							c = Color.blue;
+							break;
+	
+						case HUNTER:
+							c = Color.red;
+							break;
+	
+						case WALL:
+							c = Color.gray;
+							break;
+						}
+						
+						g2d.setColor(c);
+						g2d.fillRect(current.getX() * blockWidth, current.getY()
+								* blockHeight, blockWidth, blockHeight);
 					}
-					
-					g2d.setColor(c);
-					g2d.fillRect(current.getX() * blockWidth, current.getY()
-							* blockHeight, blockWidth, blockHeight);
 				}
 			}
-		}
-
-		if (grid) {
-			g2d.setColor(Color.black);
-			int i = 0;
-
-			while (i < this.getWidth()) {
-				g2d.drawLine(i, 0, i, this.getHeight());
-				i = i + blockWidth;
-			}
-			i = 0;
-
-			while (i < this.getHeight()) {
-				g2d.drawLine(0, i, this.getWidth(), i);
-				i = i + blockHeight;
+	
+			if (grid) {
+				g2d.setColor(Color.black);
+				int i = 0;
+	
+				while (i < this.getWidth()) {
+					g2d.drawLine(i, 0, i, this.getHeight());
+					i = i + blockWidth;
+				}
+				i = 0;
+	
+				while (i < this.getHeight()) {
+					g2d.drawLine(0, i, this.getWidth(), i);
+					i = i + blockHeight;
+				}
 			}
 		}
 
