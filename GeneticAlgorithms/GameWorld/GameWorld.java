@@ -455,22 +455,22 @@ public class GameWorld {
 			this.dead = deadStore;
 		}
 		if (this.preyCount == 0) {
-			System.out.println("WE ARE ALIVE!");
 			int num = 50;
 			if (dead.size() < num) {
 				num = dead.size();
 			}
 			int total = 0;
+			ArrayList<Actor> newList = new ArrayList<Actor>();
 			for (int i = 0; i < num; i++) {
 				Actor a = dead.remove();
-				actors.add(a);
-				world[a.getX()][a.getY()] = a;
+				newList.add(a);
 				total += a.getFitness();
 				reset(a);
 			}
 			System.out.println("Average fitness: " + total/num);
 			preyCount += num;
 		}
+		//loadNextWorld(newList);
 	}
 	
 	public void reset(Actor a) {
