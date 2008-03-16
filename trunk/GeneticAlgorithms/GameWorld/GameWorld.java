@@ -398,7 +398,7 @@ public class GameWorld {
 		} else {
 			this.spawnNewFood();
 			this.regenCounter = this.regenTurn;
-			System.out.println(dead.peek().getFitness());
+			//System.out.println(dead.peek().getFitness());
 			int num = 50;
 			if (dead.size() < num) {
 				num = dead.size();
@@ -409,8 +409,7 @@ public class GameWorld {
 			}
 			this.dead = deadStore;
 		}
-		
-		if (this.actors.isEmpty()) {
+		if (this.preyCount == 0) {
 			System.out.println("WE ARE ALIVE!");
 			int num = 50;
 			if (dead.size() < num) {
@@ -419,10 +418,13 @@ public class GameWorld {
 			
 			for (int i = 0; i < num; i++) {
 				Actor a = dead.remove();
+				a.setEnergy(this.preyEnergy);
 				a.setAlive(true);
 				actors.add(a);
 				world[a.getX()][a.getY()] = a;
+				
 			}
+			preyCount += num;
 		}
 	}
 }
