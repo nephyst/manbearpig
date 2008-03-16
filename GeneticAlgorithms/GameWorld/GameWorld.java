@@ -415,16 +415,22 @@ public class GameWorld {
 			if (dead.size() < num) {
 				num = dead.size();
 			}
-			
+			int total = 0;
 			for (int i = 0; i < num; i++) {
 				Actor a = dead.remove();
-				a.setEnergy(this.preyEnergy);
-				a.setAlive(true);
 				actors.add(a);
 				world[a.getX()][a.getY()] = a;
-				
+				total += a.getFitness();
+				reset(a);
 			}
+			System.out.println("Average fitness: " + total/num);
 			preyCount += num;
 		}
+	}
+	
+	public void reset(Actor a) {
+		a.setEnergy(this.preyEnergy);
+		a.setAlive(true);
+		a.setFitness(0);
 	}
 }
