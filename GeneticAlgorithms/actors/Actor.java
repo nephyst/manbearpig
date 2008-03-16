@@ -20,6 +20,10 @@ public class Actor extends GameObject implements Comparable {
 
 	}
 	
+	public void setFitness(int fitness){
+		this.fitness = fitness;
+	}
+	
 	public Actor(int x, int y, ObjectType type, boolean isAlive, Rules rules) {
 		super(x, y, type, isAlive);
 		this.rules = rules;
