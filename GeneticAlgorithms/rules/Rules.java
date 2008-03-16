@@ -176,4 +176,31 @@ public class Rules {
 		Rules rlz = new Rules(ruleList);
 		return rlz;
 	}
+	
+	public Rules clone() {
+		ArrayList<SimpleRule> upClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> downClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> leftClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> rightClone = new ArrayList<SimpleRule>();
+		
+		for (SimpleRule r : up) {
+			upClone.add(r.clone());
+		}
+		for (SimpleRule r : down) {
+			downClone.add(r.clone());
+		}
+		for (SimpleRule r : left) {
+			leftClone.add(r.clone());
+		}
+		for (SimpleRule r : right) {
+			rightClone.add(r.clone());
+		}
+		ArrayList<SimpleRule> ruleList[] = (ArrayList<SimpleRule>[])new ArrayList[5];
+		ruleList[0] = upClone;
+		ruleList[1] = downClone;
+		ruleList[2] = leftClone;
+		ruleList[3] = rightClone;
+		Rules rlz = new Rules(ruleList);
+		return rlz;
+	}
 }

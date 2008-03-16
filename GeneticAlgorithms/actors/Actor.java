@@ -129,4 +129,11 @@ public class Actor extends GameObject implements Comparable {
 		Integer i = this.fitness;
 		return -i.compareTo(((Actor)o).getFitness());
 	}
+	public Actor clone() {
+		Actor a = new Actor(this.getX(), this.getY(), this.getType(), this.isAlive(), this.energy);
+		a.rules = this.rules.clone();
+		a.fitness = this.fitness;
+		a.ruleBase = this.ruleBase;
+		return a;
+	}
 }

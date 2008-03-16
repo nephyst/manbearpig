@@ -24,12 +24,12 @@ HashMap<String,Integer> map = new HashMap<String,Integer>();
 		map.put("regenTurn", 3); //How many turns until food is spawned
 		
 		//Adjusts how long actors will live
-		map.put("preyEnergy", 250); //How long prey will live
+		map.put("preyEnergy", 200); //How long prey will live
 		map.put("hunterEnergy", 1); //How log hunters will live
 		map.put("foodEnergy", 300); //How long food will live
 		
 		//When eating, how much energy is gained
-		map.put("energyGained", 30); 
+		map.put("energyGained", 32); 
 		
 		//Values used for building the initial world
 		//(N / 10000) chance for a object to be spawned
@@ -39,7 +39,7 @@ HashMap<String,Integer> map = new HashMap<String,Integer>();
 		map.put("rockCount", 80); //number of rocks
 		
 		//When an actor's energy exceeds this level,  
-		map.put("respawnLevel",250);
+		map.put("respawnLevel",350);
 		
 		GameFrame frame = new GameFrame(map);
 		
