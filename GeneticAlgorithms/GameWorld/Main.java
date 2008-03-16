@@ -9,12 +9,12 @@ public class Main {
 HashMap<String,Integer> map = new HashMap<String,Integer>();
 		
 		//Number of cells in the game world
-		map.put("width", 80); //Width
-		map.put("height", 60); //Height
+		map.put("width", 200); //Width
+		map.put("height", 150); //Height
 		
 		//Size of the window (Resolution)
-		map.put("windowWidth",800); //Width
-		map.put("windowHeight",600); //Height
+		map.put("windowWidth",1024); //Width
+		map.put("windowHeight",768); //Height
 
 		//Tick rate of the clock
 		map.put("ms", 1);

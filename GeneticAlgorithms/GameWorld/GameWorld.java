@@ -42,6 +42,8 @@ public class GameWorld {
 	private GameObject[][] world;
 
 	private ArrayList<Actor> actors;
+	
+	private int preyCount = 0;
 
 	private PriorityQueue<Actor> dead = new PriorityQueue<Actor>();
 
@@ -106,6 +108,7 @@ public class GameWorld {
 		Actor prey = new Actor(x, y, ObjectType.PREY, true, this.preyEnergy);
 		world[x][y] = prey;
 		actors.add(prey);
+		preyCount++;
 
 	}
 
@@ -251,6 +254,11 @@ public class GameWorld {
 				child.setEnergy(250);
 				actor.setEnergy(actor.getEnergy() - 250);
 				this.actors.add(child);
+				
+				if (actor.getType() == ObjectType.PREY){
+					preyCount++;
+				}
+				
 			}
 
 			actor.setX(translateX(actor.getX() + dx));

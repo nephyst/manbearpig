@@ -31,7 +31,7 @@ public class GameFrame extends JFrame{
 		this.setUpWorld(map);
 		this.addComponents(d);
 		this.setUp(d);
-		this.startup();
+		//this.startup();
 		
 	}
 	
