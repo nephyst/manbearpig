@@ -20,7 +20,7 @@ HashMap<String,Integer> map = new HashMap<String,Integer>();
 		map.put("ms", 1);
 		
 		//Regeneration control for the food
-		map.put("regenRate",20); //Chance that food will be spawned
+		map.put("regenRate",10); //Chance that food will be spawned
 		map.put("regenTurn", 5); //How many turns until food is spawned
 		
 		//Adjusts how long actors will live
