@@ -15,42 +15,50 @@ public class GameWorld {
 	private Random rand;
 
 	private int width;
+
 	private int height;
 
 	private int turnCount = 0;
+
 	private int generation = 0;
-	
-	private int regenRate;// = 30; // Chance that a piece of food will be spawned
+
+	private int regenRate;// = 30; // Chance that a piece of food will be
+
+	// spawned
 	private int regenTurn;// = 10; // How many turns until food is spawned
+
 	private int regenCounter;// = regenTurn; // Counter for food respawn
 
 	private int preyEnergy;// = 250;
+
 	private int hunterEnergy;// = 1;
+
 	private int foodEnergy;// = 300;
+
 	private int energyGained;// = 30;
-	
+
 	private int respawnLevel;
 
 	private GameObject[][] world;
 
 	private ArrayList<Actor> actors;
-	
+
 	private PriorityQueue<Actor> dead = new PriorityQueue<Actor>();
 
-//	public GameWorld(int width, int height) {
-//
-//		this.rand = new Random();
-//		this.width = width;
-//		this.height = height;
-//		this.world = new GameObject[width][height];
-//		this.actors = new ArrayList<Actor>();
-//		this.initWorld();
-//		this.loadRandomWorld(preyCount, foodCount, hunterCount, rockCount);
-//
-//	}
-	
-	public GameWorld(HashMap<String,Integer> map){
-		
+	// public GameWorld(int width, int height) {
+	//
+	// this.rand = new Random();
+	// this.width = width;
+	// this.height = height;
+	// this.world = new GameObject[width][height];
+	// this.actors = new ArrayList<Actor>();
+	// this.initWorld();
+	// this.loadRandomWorld(preyCount, foodCount, hunterCount, rockCount);
+	//
+	// }
+
+	public GameWorld(HashMap<String, Integer> map) {
+
 		this.rand = new Random();
 		width = map.get("width");
 		height = map.get("height");
@@ -59,19 +67,20 @@ public class GameWorld {
 
 		this.regenRate = map.get("regenRate");
 		this.regenTurn = map.get("regenTurn");
-		
+
 		this.preyEnergy = map.get("preyEnergy");
 		this.hunterEnergy = map.get("hunterEnergy");
 		this.foodEnergy = map.get("foodEnergy");
-		
+
 		this.energyGained = map.get("energyGained");
-		
+
 		this.respawnLevel = map.get("respawnLevel");
-		
+
 		regenCounter = regenTurn;
-		
+
 		this.initWorld();
-		this.loadRandomWorld(map.get("preyCount"), map.get("foodCount"), map.get("hunterCount"), map.get("rockCount"));
+		this.loadRandomWorld(map.get("preyCount"), map.get("foodCount"), map
+				.get("hunterCount"), map.get("rockCount"));
 	}
 
 	public void spawnNewFood() {
@@ -225,7 +234,8 @@ public class GameWorld {
 				.getY()
 				+ dy)];
 
-		if (actor.getType() == ObjectType.PREY || actor.getType() == ObjectType.FOOD) {
+		if (actor.getType() == ObjectType.PREY
+				|| actor.getType() == ObjectType.FOOD) {
 			actor.subtractEnergy(1);
 		}
 
@@ -233,15 +243,16 @@ public class GameWorld {
 			world[actor.getX()][actor.getY()] = new GameObject(actor.getX(),
 					actor.getY(), ObjectType.NONE, false);
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
-			
-			if (actor.getType() == ObjectType.PREY && actor.getEnergy() > respawnLevel) {
+
+			if (actor.getType() == ObjectType.PREY
+					&& actor.getEnergy() > respawnLevel) {
 				Actor child = actor.spawn();
 				world[translateX(actor.getX())][translateY(actor.getY())] = child;
 				child.setEnergy(250);
 				actor.setEnergy(actor.getEnergy() - 250);
 				this.actors.add(child);
 			}
-			
+
 			actor.setX(translateX(actor.getX() + dx));
 			actor.setY(translateY(actor.getY() + dy));
 
@@ -376,10 +387,29 @@ public class GameWorld {
 		} else {
 			this.spawnNewFood();
 			this.regenCounter = this.regenTurn;
-			//for (Actor a : dead)
-				System.out.println(dead.peek().getFitness());
+			System.out.println(dead.peek().getFitness());
+			int num = 50;
+			if (dead.size() < num) {
+				num = dead.size();
+			}
+			PriorityQueue<Actor> deadStore = new PriorityQueue<Actor>();
+			for (int i = 0; i < num; i++) {
+				deadStore.add(dead.remove());
+			}
+			this.dead = deadStore;
 		}
-
+		int num = 50;
+		if (dead.size() < num) {
+			num = dead.size();
+		}
+		if (this.actors.isEmpty()) {
+			System.out.println("WE ARE ALIVE!");
+			for (int i = 0; i < num; i++) {
+				Actor a = dead.remove();
+				a.setAlive(true);
+				actors.add(a);
+				world[a.getX()][a.getY()] = a;
+			}
+		}
 	}
-
 }
