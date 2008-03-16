@@ -45,7 +45,7 @@ public class GameWorld {
 	
 	private int preyCount = 0;
 
-	private PriorityQueue<Actor> dead = new PriorityQueue<Actor>();
+	private PriorityQueue<Actor> dead;
 
 	// public GameWorld(int width, int height) {
 	//
@@ -64,8 +64,6 @@ public class GameWorld {
 		this.rand = new Random();
 		width = map.get("width");
 		height = map.get("height");
-		this.world = new GameObject[width][height];
-		this.actors = new ArrayList<Actor>();
 
 		this.regenRate = map.get("regenRate");
 		this.regenTurn = map.get("regenTurn");
@@ -138,6 +136,10 @@ public class GameWorld {
 
 	public void initWorld() {
 
+		this.world = new GameObject[width][height];
+		this.actors = new ArrayList<Actor>();
+		this.dead = new PriorityQueue<Actor>();
+		
 		for (int i = 0; i < this.width; i++) {
 			for (int j = 0; j < height; j++) {
 
@@ -197,6 +199,49 @@ public class GameWorld {
 
 	public void loadRandomWorld(int prey, int food, int hunter, int rocks) {
 
+		int random = 0;
+
+		if ((random + prey + food) <= 10000) {
+
+			for (int i = 0; i < width; i++) {
+				for (int j = 0; j < height; j++) {
+
+					random = rand.nextInt(10000);
+
+					if (random < prey) {
+						this.addPrey(i, j);
+					} else if (random >= prey && random < (prey + food)) {
+						this.addFood(i, j);
+					} else if (random >= (prey + food)
+							&& random < (prey + food + hunter)) {
+						this.addHunter(i, j);
+					} else if (random >= (prey + food + hunter)
+							&& random < (prey + food + hunter + rocks)) {
+						this.addRock(i, j);
+					}
+				}
+			}
+
+		} else {
+			this.loadWorld1();
+		}
+	}
+	
+	public void loadNextWorld(ArrayList<Actor> list,int prey, int food, int hunter, int rocks) {
+
+		this.initWorld();
+		
+		for(int i = 0;i < list.size();i++){
+			
+			Actor a = list.get(i);
+			
+			world[a.getX()][a.getY()] = a;
+			actors.add(a);
+			
+		}
+		
+		prey = prey/2;
+		
 		int random = 0;
 
 		if ((random + prey + food) <= 10000) {
