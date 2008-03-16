@@ -363,7 +363,8 @@ public class GameWorld {
 				newList.add(actorList.get(i));
 			} else {
 				Actor a = actorList.get(i);
-				dead.offer(a);
+				if (a.getType() == ObjectType.PREY)
+					dead.offer(a);
 				world[a.getX()][a.getY()] = new GameObject(a.getX(), a.getY(),
 						ObjectType.NONE, false);
 			}
@@ -406,12 +407,14 @@ public class GameWorld {
 			}
 			this.dead = deadStore;
 		}
-		int num = 50;
-		if (dead.size() < num) {
-			num = dead.size();
-		}
+		
 		if (this.actors.isEmpty()) {
 			System.out.println("WE ARE ALIVE!");
+			int num = 50;
+			if (dead.size() < num) {
+				num = dead.size();
+			}
+			
 			for (int i = 0; i < num; i++) {
 				Actor a = dead.remove();
 				a.setAlive(true);
