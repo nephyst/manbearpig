@@ -10,11 +10,11 @@ HashMap<String,Integer> map = new HashMap<String,Integer>();
 		
 		//Number of cells in the game world
 		map.put("width", 200); //Width
-		map.put("height", 150); //Height
+		map.put("height", 100); //Height
 		
 		//Size of the window (Resolution)
-		map.put("windowWidth",1024); //Width
-		map.put("windowHeight",768); //Height
+		map.put("windowWidth",1200); //Width
+		map.put("windowHeight",600); //Height
 
 		//Tick rate of the clock
 		map.put("ms", 1);
