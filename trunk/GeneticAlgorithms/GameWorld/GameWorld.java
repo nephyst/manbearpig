@@ -363,8 +363,10 @@ public class GameWorld {
 				newList.add(actorList.get(i));
 			} else {
 				Actor a = actorList.get(i);
-				if (a.getType() == ObjectType.PREY)
+				if (a.getType() == ObjectType.PREY){
 					dead.offer(a);
+					preyCount--;
+				}
 				world[a.getX()][a.getY()] = new GameObject(a.getX(), a.getY(),
 						ObjectType.NONE, false);
 			}
