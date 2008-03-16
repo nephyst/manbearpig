@@ -12,6 +12,8 @@ import actors.ObjectType;
 
 public class GameWorld {
 
+	private HashMap<String, Integer> map;
+	
 	private Random rand;
 
 	private int width;
@@ -61,6 +63,7 @@ public class GameWorld {
 
 	public GameWorld(HashMap<String, Integer> map) {
 
+		this.map = map;
 		this.rand = new Random();
 		width = map.get("width");
 		height = map.get("height");
@@ -227,8 +230,14 @@ public class GameWorld {
 		}
 	}
 	
-	public void loadNextWorld(ArrayList<Actor> list,int prey, int food, int hunter, int rocks) {
+	public void loadNextWorld(ArrayList<Actor> list) {
 
+		int prey = map.get("preyCount");
+		int food = map.get("foodCount");
+		int hunter = map.get("hunterCount");
+		int rocks = map.get("rockCount");
+		
+		
 		this.initWorld();
 		
 		for(int i = 0;i < list.size();i++){
@@ -469,8 +478,9 @@ public class GameWorld {
 			}
 			System.out.println("Average fitness: " + total/num);
 			preyCount += num;
+			this.loadNextWorld(newList);
 		}
-		//loadNextWorld(newList);
+		
 	}
 	
 	public void reset(Actor a) {
