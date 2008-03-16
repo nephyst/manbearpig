@@ -234,7 +234,7 @@ public class GameWorld {
 					actor.getY(), ObjectType.NONE, false);
 			world[translateX(actor.getX() + dx)][translateY(actor.getY() + dy)] = actor;
 			
-			if (actor.getEnergy() > respawnLevel) {
+			if (actor.getType() == ObjectType.PREY && actor.getEnergy() > respawnLevel) {
 				Actor child = actor.spawn();
 				world[translateX(actor.getX())][translateY(actor.getY())] = child;
 				child.setEnergy(250);

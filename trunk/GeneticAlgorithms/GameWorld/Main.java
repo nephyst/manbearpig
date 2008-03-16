@@ -17,7 +17,7 @@ HashMap<String,Integer> map = new HashMap<String,Integer>();
 		map.put("windowHeight",600); //Height
 
 		//Tick rate of the clock
-		map.put("ms", 10);
+		map.put("ms", 1);
 		
 		//Regeneration control for the food
 		map.put("regenRate",30); //Chance that food will be spawned
@@ -36,7 +36,7 @@ HashMap<String,Integer> map = new HashMap<String,Integer>();
 		map.put("preyCount",100); //Number of prey
 		map.put("foodCount", 300); //Number of food
 		map.put("hunterCount",50); //number of hunters
-		map.put("rockCount", 10); //number of rocks
+		map.put("rockCount", 100); //number of rocks
 		
 		//When an actor's energy exceeds this level,  
 		map.put("respawnLevel",250);
