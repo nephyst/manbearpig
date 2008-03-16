@@ -1,6 +1,7 @@
 package actors;
 
 import rules.Action;
+import rules.RuleBase;
 import rules.Rules;
 import GameWorld.Perception;
 
@@ -12,12 +13,24 @@ public class Actor extends GameObject implements Comparable {
 	
 	private int fitness;
 	
+	private RuleBase ruleBase = RuleBase.genetic;
+	
 	public Actor(int x, int y, ObjectType type, boolean isAlive, int energy) {
 		super(x, y, type, isAlive);
 		this.energy = energy;
-		if (type == ObjectType.PREY)
-			this.rules = new Rules();
-
+		if (type == ObjectType.PREY) {
+			switch (ruleBase) {
+			case best:
+				this.rules = Rules.best();
+				break;
+			case random:
+				this.rules = Rules.random();
+				break;
+			case genetic:
+				this.rules = new Rules();
+				break;
+			}
+		}
 	}
 	
 	public void setFitness(int fitness){
@@ -57,7 +70,18 @@ public class Actor extends GameObject implements Comparable {
 	}
 
 	public Actor spawn() {
-		Rules r = rules.mutate();
+		Rules r = new Rules();
+		switch (ruleBase) {
+		case best:
+			r = Rules.best();
+			break;
+		case random:
+			r = Rules.random();
+			break;
+		case genetic:
+			r = this.rules.mutate();
+			break;
+		}
 		return new Actor(this.getX(), this.getY(), this.getType(), true, r);
 	}
 	public void setEnergy(int amount) {

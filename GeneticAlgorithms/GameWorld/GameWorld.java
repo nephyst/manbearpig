@@ -48,7 +48,9 @@ public class GameWorld {
 	private int preyCount = 0;
 
 	private PriorityQueue<Actor> dead;
-
+	
+	private int ticks = 0;
+	
 	// public GameWorld(int width, int height) {
 	//
 	// this.rand = new Random();
@@ -305,8 +307,8 @@ public class GameWorld {
 					&& actor.getEnergy() > respawnLevel) {
 				Actor child = actor.spawn();
 				world[translateX(actor.getX())][translateY(actor.getY())] = child;
-				child.setEnergy(250);
-				actor.setEnergy(actor.getEnergy() - 250);
+				child.setEnergy(respawnLevel);
+				actor.setEnergy(actor.getEnergy() - respawnLevel);
 				this.actors.add(child);
 				
 				if (actor.getType() == ObjectType.PREY){
@@ -432,7 +434,9 @@ public class GameWorld {
 	}
 
 	public void tick() {
-
+		
+		this.ticks++;
+		
 		this.randomizeList(this.actors);
 
 		for (int i = 0; i < actors.size(); i++) {
@@ -476,8 +480,9 @@ public class GameWorld {
 				total += a.getFitness();
 				reset(a);
 			}
-			System.out.println("Average fitness: " + total/num);
+			System.out.println(total/num + " " + ticks);
 			preyCount += num;
+			this.ticks = 0;
 			this.loadNextWorld(newList);
 		}
 		

@@ -16,14 +16,11 @@ public class Rules {
 
 	private ArrayList<SimpleRule> right;
 
-	private ArrayList<SimpleRule> random;
-
 	public Rules() {
 		up = new ArrayList<SimpleRule>();
 		down = new ArrayList<SimpleRule>();
 		left = new ArrayList<SimpleRule>();
 		right = new ArrayList<SimpleRule>();
-		random = new ArrayList<SimpleRule>();
 		generateRandomRules();
 	}
 	
@@ -32,7 +29,6 @@ public class Rules {
 		this.down = rules[1];
 		this.left = rules[2];
 		this.right = rules[3];
-		this.random = rules[4];
 	}
 	
 
@@ -49,9 +45,6 @@ public class Rules {
 		for (int i = 0; i < 4; i++) {
 			right.add(new SimpleRule());
 		}
-		for (int i = 0; i < 4; i++) {
-			random.add(new SimpleRule());
-		}
 	}
 
 	public Action getAction(Perception p) {
@@ -59,7 +52,6 @@ public class Rules {
 		int desireDown = 0;
 		int desireLeft = 0;
 		int desireRight = 0;
-		int desireRandom = 0;
 		
 		for (SimpleRule r : up)
 			desireUp += r.checkRule(p);
@@ -73,13 +65,9 @@ public class Rules {
 		for (SimpleRule r : right)
 			desireRight += r.checkRule(p);
 		
-		for (SimpleRule r : random)
-			desireRandom += r.checkRule(p);
-		
 		int maxDesire = Math.max(desireUp, desireDown);
 		maxDesire = Math.max(maxDesire, desireLeft);
 		maxDesire = Math.max(maxDesire, desireRight);
-		maxDesire = Math.max(maxDesire, desireRandom);
 		ArrayList<Action>  action = new ArrayList<Action>();
 		if (desireUp == maxDesire) {
 			action.add(Action.UP);
@@ -94,20 +82,54 @@ public class Rules {
 		
 			action.add(Action.RIGHT);
 		}
-		if (desireRandom == maxDesire) {
-			action.add(Action.RANDOM);
-		}
 		Random r = new Random();
 		return action.get(r.nextInt(action.size()));
 	}
 	
-	public Rules mutate() {
-		
+	public static Rules best() {
 		ArrayList<SimpleRule> upClone = new ArrayList<SimpleRule>();
 		ArrayList<SimpleRule> downClone = new ArrayList<SimpleRule>();
 		ArrayList<SimpleRule> leftClone = new ArrayList<SimpleRule>();
 		ArrayList<SimpleRule> rightClone = new ArrayList<SimpleRule>();
-		ArrayList<SimpleRule> randomClone = new ArrayList<SimpleRule>();
+		
+		upClone.add(new SimpleRule(ObjectType.FOOD, Direction.UP));
+		downClone.add(new SimpleRule(ObjectType.FOOD, Direction.DOWN));
+		leftClone.add(new SimpleRule(ObjectType.FOOD, Direction.LEFT));
+		rightClone.add(new SimpleRule(ObjectType.FOOD, Direction.RIGHT));
+		
+		upClone.add(new SimpleRule(ObjectType.HUNTER, Direction.DOWN));
+		downClone.add(new SimpleRule(ObjectType.HUNTER, Direction.UP));
+		leftClone.add(new SimpleRule(ObjectType.HUNTER, Direction.RIGHT));
+		rightClone.add(new SimpleRule(ObjectType.HUNTER, Direction.LEFT));
+		
+		upClone.add(new SimpleRule(ObjectType.HUNTER, Direction.DOWN));
+		downClone.add(new SimpleRule(ObjectType.HUNTER, Direction.UP));
+		leftClone.add(new SimpleRule(ObjectType.HUNTER, Direction.RIGHT));
+		rightClone.add(new SimpleRule(ObjectType.HUNTER, Direction.LEFT));
+		
+		upClone.add(new SimpleRule(ObjectType.WALL, Direction.DOWN));
+		downClone.add(new SimpleRule(ObjectType.WALL, Direction.UP));
+		leftClone.add(new SimpleRule(ObjectType.WALL, Direction.RIGHT));
+		rightClone.add(new SimpleRule(ObjectType.WALL, Direction.LEFT));
+		
+		ArrayList<SimpleRule> ruleList[] = (ArrayList<SimpleRule>[])new ArrayList[4];
+		ruleList[0] = upClone;
+		ruleList[1] = downClone;
+		ruleList[2] = leftClone;
+		ruleList[3] = rightClone;
+		Rules rlz = new Rules(ruleList);
+		return rlz;
+	}
+	
+	public static Rules random() {
+		return new Rules();
+	}
+	
+	public Rules mutate() {
+		ArrayList<SimpleRule> upClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> downClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> leftClone = new ArrayList<SimpleRule>();
+		ArrayList<SimpleRule> rightClone = new ArrayList<SimpleRule>();
 		
 		for (SimpleRule r : up) {
 			upClone.add(r.clone());
@@ -121,12 +143,9 @@ public class Rules {
 		for (SimpleRule r : right) {
 			rightClone.add(r.clone());
 		}
-		for (SimpleRule r : random) {
-			randomClone.add(r.clone());
-		}
 		
 		Random r = new Random();
-		int i = r.nextInt(5);
+		int i = r.nextInt(4);
 		int j = r.nextInt(4);
 		switch (i) {
 		case 0:
@@ -147,11 +166,6 @@ public class Rules {
 			rightClone.remove(j);
 			rightClone.add(new SimpleRule());
 			break;
-			
-		case 4:
-			randomClone.remove(j);
-			randomClone.add(new SimpleRule());
-			break;
 		}
 		
 		ArrayList<SimpleRule> ruleList[] = (ArrayList<SimpleRule>[])new ArrayList[5];
@@ -159,7 +173,6 @@ public class Rules {
 		ruleList[1] = downClone;
 		ruleList[2] = leftClone;
 		ruleList[3] = rightClone;
-		ruleList[4] = randomClone;
 		Rules rlz = new Rules(ruleList);
 		return rlz;
 	}
