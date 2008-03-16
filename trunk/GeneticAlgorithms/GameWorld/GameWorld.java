@@ -1,5 +1,6 @@
 package GameWorld;
 
+import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.PriorityQueue;
@@ -13,7 +14,7 @@ import actors.ObjectType;
 public class GameWorld {
 
 	private HashMap<String, Integer> map;
-	
+
 	private Random rand;
 
 	private int width;
@@ -44,13 +45,15 @@ public class GameWorld {
 	private GameObject[][] world;
 
 	private ArrayList<Actor> actors;
-	
+
 	private int preyCount = 0;
 
 	private PriorityQueue<Actor> dead;
-	
+
 	private int ticks = 0;
 	
+	private String myFile = "genetic2.txt";
+
 	// public GameWorld(int width, int height) {
 	//
 	// this.rand = new Random();
@@ -83,6 +86,8 @@ public class GameWorld {
 
 		regenCounter = regenTurn;
 
+		this.dead = new PriorityQueue<Actor>();
+		
 		this.initWorld();
 		this.loadRandomWorld(map.get("preyCount"), map.get("foodCount"), map
 				.get("hunterCount"), map.get("rockCount"));
@@ -143,8 +148,8 @@ public class GameWorld {
 
 		this.world = new GameObject[width][height];
 		this.actors = new ArrayList<Actor>();
-		this.dead = new PriorityQueue<Actor>();
-		
+//		this.dead = new PriorityQueue<Actor>();
+
 		for (int i = 0; i < this.width; i++) {
 			for (int j = 0; j < height; j++) {
 
@@ -231,28 +236,27 @@ public class GameWorld {
 			this.loadWorld1();
 		}
 	}
-	
+
 	public void loadNextWorld(ArrayList<Actor> list) {
 
 		int prey = map.get("preyCount");
 		int food = map.get("foodCount");
 		int hunter = map.get("hunterCount");
 		int rocks = map.get("rockCount");
-		
-		
+
 		this.initWorld();
-		
-		for(int i = 0;i < list.size();i++){
-			
+
+		for (int i = 0; i < list.size(); i++) {
+
 			Actor a = list.get(i);
-			
+
 			world[a.getX()][a.getY()] = a;
 			actors.add(a);
-			
+
 		}
-		
-		prey = prey/2;
-		
+
+		prey = prey / 2;
+
 		int random = 0;
 
 		if ((random + prey + food) <= 10000) {
@@ -310,11 +314,11 @@ public class GameWorld {
 				child.setEnergy(respawnLevel);
 				actor.setEnergy(actor.getEnergy() - respawnLevel);
 				this.actors.add(child);
-				
-				if (actor.getType() == ObjectType.PREY){
+
+				if (actor.getType() == ObjectType.PREY) {
 					preyCount++;
 				}
-				
+
 			}
 
 			actor.setX(translateX(actor.getX() + dx));
@@ -419,14 +423,13 @@ public class GameWorld {
 				newList.add(actorList.get(i));
 			} else {
 				Actor a = actorList.get(i);
-				if (a.getType() == ObjectType.PREY){
-					dead.offer(a);
+				if (a.getType() == ObjectType.PREY) {
+					dead.offer(a.clone());
 					preyCount--;
 				}
 				world[a.getX()][a.getY()] = new GameObject(a.getX(), a.getY(),
 						ObjectType.NONE, false);
 			}
-
 		}
 
 		this.actors = newList;
@@ -434,9 +437,9 @@ public class GameWorld {
 	}
 
 	public void tick() {
-		
+
 		this.ticks++;
-		
+
 		this.randomizeList(this.actors);
 
 		for (int i = 0; i < actors.size(); i++) {
@@ -456,7 +459,7 @@ public class GameWorld {
 		} else {
 			this.spawnNewFood();
 			this.regenCounter = this.regenTurn;
-			//System.out.println(dead.peek().getFitness());
+			// System.out.println(dead.peek().getFitness());
 			int num = 50;
 			if (dead.size() < num) {
 				num = dead.size();
@@ -480,14 +483,23 @@ public class GameWorld {
 				total += a.getFitness();
 				reset(a);
 			}
-			System.out.println(total/num + " " + ticks);
+			System.out.println(total / num + " " + ticks);
+			try {
+				PrintStream out = new PrintStream(
+						new AppendFileStream(this.myFile));
+				out.println(total / num + " " + ticks);
+				out.close();
+			} catch (Exception e) {
+				System.out.println(e.toString());
+			}
+
 			preyCount += num;
 			this.ticks = 0;
 			this.loadNextWorld(newList);
 		}
-		
+
 	}
-	
+
 	public void reset(Actor a) {
 		a.setEnergy(this.preyEnergy);
 		a.setAlive(true);
